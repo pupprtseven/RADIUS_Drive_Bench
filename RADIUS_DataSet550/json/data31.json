@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.1",
+  "level3": "3.1.3",
+  "pic_name": "data31",
+  "pre_dec_file": "pre_dec_json\\data31_aligned.json",
+  "gt_json_file": "json/gt_json\\data31_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Abnormal traffic flow-Parking",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Wait for avoidance and proceed straight ahead",
+  "pic_path": "..\\pic\\data31.png"
+}

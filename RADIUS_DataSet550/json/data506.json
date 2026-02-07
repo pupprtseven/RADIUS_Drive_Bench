@@ -1,0 +1,17 @@
+{
+  "level1": "2",
+  "level2": "2.1",
+  "level3": "2.1.1",
+  "pic_name": "data506",
+  "is_longtail": "True",
+  "lt_ele": "Ground obstacle",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and replan the route",
+  "pic_path": "..\\pic\\data506.png",
+  "pre_dec_file": "pre_dec_json\\data506_aligned.json",
+  "gt_json_file": "json/gt_json\\data506_gt.json"
+}

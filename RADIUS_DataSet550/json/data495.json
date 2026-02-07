@@ -1,0 +1,17 @@
+{
+  "level1": "2",
+  "level2": "2.1",
+  "level3": "2.1.2",
+  "pic_name": "data495",
+  "is_longtail": "True",
+  "lt_ele": "Falling objects from above",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Slow down and take a detour",
+  "pic_path": "..\\pic\\data495.png",
+  "pre_dec_file": "pre_dec_json\\data495_aligned.json",
+  "gt_json_file": "json/gt_json\\data495_gt.json"
+}

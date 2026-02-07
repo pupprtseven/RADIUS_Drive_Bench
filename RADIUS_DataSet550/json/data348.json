@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.4",
+  "level3": "2.4.1",
+  "pic_name": "data348",
+  "pre_dec_file": "pre_dec_json\\data348_aligned.json",
+  "gt_json_file": "json/gt_json\\data348_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Poor visibility",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data348.png"
+}

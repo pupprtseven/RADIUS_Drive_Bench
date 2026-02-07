@@ -1,0 +1,17 @@
+{
+  "level1": "2",
+  "level2": "2.5",
+  "level3": "2.5.1",
+  "pic_name": "data3",
+  "is_longtail": "True",
+  "lt_ele": "Road surface damage-Severe",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and replan the route",
+  "pic_path": "..\\pic\\data3.png",
+  "pre_dec_file": "pre_dec_json\\data3_aligned.json",
+  "gt_json_file": "json/gt_json\\data3_gt.json"
+}

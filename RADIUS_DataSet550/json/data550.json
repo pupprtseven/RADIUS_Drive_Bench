@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.5",
+  "level3": "1.5.1",
+  "pic_name": "data550",
+  "pre_dec_file": "pre_dec_json\\data550_aligned.json",
+  "gt_json_file": "json/gt_json\\data550_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Natural disaster",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and replan the route",
+  "pic_path": "..\\pic\\data550.png"
+}

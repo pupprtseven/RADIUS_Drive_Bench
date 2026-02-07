@@ -1,0 +1,59 @@
+{
+  "width": 1000,
+  "height": 2000,
+  "dt": 0.2,
+  "entities": [
+    {
+      "id": "ego",
+      "type": "ego",
+      "toward": "0",
+      "x": 500,
+      "y": 0,
+      "size": "Small",
+      "vx": 0,
+      "vy": 500,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_1",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 498,
+      "y": 755,
+      "size": "Small",
+      "vx": 0,
+      "vy": 350,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_2",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 300,
+      "y": 1287,
+      "size": "Small",
+      "vx": 0,
+      "vy": 350,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "obs_1",
+      "type": "obstacle",
+      "x": 95,
+      "y": 973,
+      "width": 200,
+      "length": 2000
+    },
+    {
+      "id": "obs_2",
+      "type": "obstacle",
+      "x": 801,
+      "y": 964,
+      "width": 400,
+      "length": 2000
+    }
+  ]
+}

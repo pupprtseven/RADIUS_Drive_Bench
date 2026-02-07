@@ -1,0 +1,79 @@
+{
+  "width": 1000,
+  "height": 2000,
+  "dt": 0.2,
+  "entities": [
+    {
+      "id": "ego",
+      "type": "ego",
+      "toward": "0",
+      "x": 500,
+      "y": 0,
+      "size": "Small",
+      "vx": 0,
+      "vy": 200,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_1",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 498,
+      "y": 1144,
+      "size": "Small",
+      "vx": 0,
+      "vy": 400,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_2",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 103,
+      "y": 1352,
+      "size": "Small",
+      "vx": 0,
+      "vy": 400,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_3",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 300,
+      "y": 1530,
+      "size": "Small",
+      "vx": 0,
+      "vy": 400,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "ped_1",
+      "type": "pedestrian",
+      "x": 33,
+      "y": 492,
+      "vx": 0,
+      "vy": 0
+    },
+    {
+      "id": "obs_1",
+      "type": "obstacle",
+      "x": 799,
+      "y": 961,
+      "width": 400,
+      "length": 2000
+    },
+    {
+      "id": "obs_2",
+      "type": "obstacle",
+      "x": 293,
+      "y": 521,
+      "width": 609,
+      "length": 63
+    }
+  ]
+}

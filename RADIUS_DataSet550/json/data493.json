@@ -1,0 +1,17 @@
+{
+  "level1": "2",
+  "level2": "2.2",
+  "level3": "2.2.2",
+  "pic_name": "data493",
+  "is_longtail": "True",
+  "lt_ele": "Low-speed heavy vehicles",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Wait for avoidance and proceed straight ahead",
+  "pic_path": "..\\pic\\data493.png",
+  "pre_dec_file": "pre_dec_json\\data493_aligned.json",
+  "gt_json_file": "json/gt_json\\data493_gt.json"
+}

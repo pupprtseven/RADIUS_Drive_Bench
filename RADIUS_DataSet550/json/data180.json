@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.3",
+  "level3": "2.3.2",
+  "pic_name": "data180",
+  "pre_dec_file": "pre_dec_json\\data180_aligned.json",
+  "gt_json_file": "json/gt_json\\data180_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Command signals/temporary signs",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Park safely and request instructions",
+  "pic_path": "..\\pic\\data180.png"
+}

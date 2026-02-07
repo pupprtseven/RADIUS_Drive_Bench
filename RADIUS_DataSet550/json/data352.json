@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.1",
+  "level3": "1.1.3",
+  "pic_name": "data352",
+  "pre_dec_file": "pre_dec_json\\data352_aligned.json",
+  "gt_json_file": "json/gt_json\\data352_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Sand and dust",
+  "acc_factors": [
+    "Non-motor vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data352.png"
+}

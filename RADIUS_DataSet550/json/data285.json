@@ -1,0 +1,17 @@
+{
+  "level1": "1",
+  "level2": "1.1",
+  "level3": "1.1.1",
+  "pic_name": "data285",
+  "is_longtail": "True",
+  "lt_ele": "Snowy terrain",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Slow down and take a detour",
+  "pic_path": "..\\pic\\data285.png",
+  "pre_dec_file": "pre_dec_json\\data285_aligned.json",
+  "gt_json_file": "json/gt_json\\data285_gt.json"
+}

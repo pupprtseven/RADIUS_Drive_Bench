@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.3",
+  "level3": "3.3.3",
+  "pic_name": "data422",
+  "pre_dec_file": "pre_dec_json\\data422_aligned.json",
+  "gt_json_file": "json/gt_json\\data422_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Abnormal behavior of other vehicles-Vehicle body abnormality",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility temporarily"
+  ],
+  "post_dec": "Emergency evacuation based on actual conditions",
+  "pic_path": "..\\pic\\data422.png"
+}

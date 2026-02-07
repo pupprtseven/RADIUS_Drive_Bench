@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.5",
+  "level3": "2.5.2",
+  "pic_name": "data513",
+  "pic_path": "..\\pic\\data513.png",
+  "pre_dec_file": "pre_dec_json\\data513_aligned.json",
+  "gt_json_file": "json/gt_json\\data513_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Road surface damage-Moderate",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Low-speed straight passage"
+}

@@ -1,0 +1,75 @@
+{
+  "width": 1000,
+  "height": 2000,
+  "dt": 0.2,
+  "entities": [
+    {
+      "id": "ego",
+      "type": "ego",
+      "toward": "0",
+      "x": 500,
+      "y": 0,
+      "size": "Small",
+      "vx": 0,
+      "vy": 277,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_1",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 322,
+      "y": 28,
+      "size": "Small",
+      "vx": 0,
+      "vy": 277,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_2",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 337,
+      "y": 597,
+      "size": "Small",
+      "vx": 0,
+      "vy": 277,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_3",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 689,
+      "y": 712,
+      "size": "Small",
+      "vx": 0,
+      "vy": 277,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_4",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 500,
+      "y": 1317,
+      "size": "Small",
+      "vx": 0,
+      "vy": 277,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "obs_1",
+      "type": "obstacle",
+      "x": 898,
+      "y": 992,
+      "width": 200,
+      "length": 2000
+    }
+  ]
+}

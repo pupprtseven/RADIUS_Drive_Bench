@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.2",
+  "level3": "1.2.2",
+  "pic_name": "data25",
+  "pre_dec_file": "pre_dec_json\\data25_aligned.json",
+  "gt_json_file": "json/gt_json\\data25_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Large-scale equipment",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Slow down and take a detour",
+  "pic_path": "..\\pic\\data25.png"
+}

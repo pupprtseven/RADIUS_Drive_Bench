@@ -1,0 +1,17 @@
+{
+  "level1": "3",
+  "level2": "3.3",
+  "level3": "3.3.1",
+  "pic_name": "data281",
+  "is_longtail": "True",
+  "lt_ele": "Abnormal behavior of other vehicles-Sudden braking",
+  "acc_factors": [
+    "Non-motor vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Wait for avoidance and proceed straight ahead",
+  "pic_path": "..\\pic\\data281.png",
+  "pre_dec_file": "pre_dec_json\\data281_aligned.json",
+  "gt_json_file": "json/gt_json\\data281_gt.json"
+}

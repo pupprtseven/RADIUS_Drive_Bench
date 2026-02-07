@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.1",
+  "level3": "1.1.1",
+  "pic_name": "data26",
+  "pic_path": "..\\pic\\data26.png",
+  "pre_dec_file": "pre_dec_json\\data26_aligned.json",
+  "gt_json_file": "json/gt_json\\data26_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Snowy terrain",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Low-speed straight passage"
+}

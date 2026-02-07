@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+.DS_Store
+
+.env
+.env.*
+.venv/
+venv/
+
+results/
+logs/
+data/
+Data*/

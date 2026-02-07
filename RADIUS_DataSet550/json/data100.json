@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.3",
+  "level3": "3.3.3",
+  "pic_name": "data100",
+  "pre_dec_file": "pre_dec_json\\data100_aligned.json",
+  "gt_json_file": "json/gt_json\\data100_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Abnormal behavior of other vehicles-Vehicle body abnormality",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Slow down and take a detour",
+  "pic_path": "..\\pic\\data100.png"
+}

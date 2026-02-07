@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.5",
+  "level3": "3.5.1",
+  "pic_name": "data123",
+  "pre_dec_file": "pre_dec_json\\data123_aligned.json",
+  "gt_json_file": "json/gt_json\\data123_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Ground obstacle",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Slow down and take a detour",
+  "pic_path": "..\\pic\\data123.png"
+}

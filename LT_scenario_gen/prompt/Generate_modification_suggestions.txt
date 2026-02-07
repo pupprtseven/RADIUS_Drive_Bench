@@ -1,0 +1,109 @@
+Role: You are an expert in the research of intelligent driving long tail environments, with the goal of converting real photos taken by car front cameras into scene images of specified categories of long tail environments or blurry long tail environments through Photoshop. Provide a prompt to modify this image using Gemini.
+Input: A real driving scene image from the front perspective of the car.
+Category: {opt}
+Long tail scene classification(First level category (X), second level category (X.X), third level category (X.X.X)):
+1. Fully Closed (Lane closed, not passable)
+- 1.1 Weather - caused Closure**
+-- 1.1.1 Snow   (The road is covered with snow piles or heavy snow, making it impossible for vehicles to pass through or driving at high risk (often accompanied by icing)
+-- 1.1.2 Rain   (rainstorm causes ponding/waterlogging on the road, wading is not feasible or there is a risk of scouring)
+-- 1.1.3 Others (Hail, dust, etc. make roads unsafe to pass through)
+- 1.2 Full Closure for Construction/ Maintenance
+-- 1.2.1 Pavement Construction/ Repair  (The construction unit occupies the road and causes closure, usually accompanied by construction fences, road cones, and obvious signs)
+-- 1.2.2 Large - equipment Occupation   (Large machinery or transportation equipment (cranes, tunnel excavation equipment) occupying the entire roadway causing impassable)
+-- 1.2.3 Others  (Other maintenance activities leading to closure (such as bridge deck maintenance)
+- 1.3 Major Traffic Accident Closure
+-- 1.3.1 Dangerous Goods Transport Vehicle Accident     (Dangerous goods vehicle accidents are accompanied by leakage, toxic/flammable risks, and require comprehensive closure treatment)
+-- 1.3.2 Multiple - vehicle Pile - up Leading to Full Closure   (Large scale traffic accident causing severe road blockage and rescue occupying the passage area)
+-- 1.3.3 Road Structural Damage     (Bridge deck collapse, guardrail damage, or bridge/roadbed damage causing impassable)
+-- 1.3.4 Others     (Other accidents that cause closure (such as fire spread)
+- 1.4 Activity/ Event Control Closure
+-- 1.4.1 Mass Activities        (Sports events, parades, temporary road closures for events, usually with official announcements and roadblocks)
+-- 1.4.2 Political Activities       (Traffic police control, closure for safety or political reasons (demonstrations, visits by state guests))
+-- 1.4.3 Others     (Other situations where temporary activities result in closure)
+- 1.5 Natural Disaster/ Geological Disaster Closure
+-- 1.5.1 Pavement Surface Disaster Deposition       (Landslides, mudslides, floods, tides, etc. encroach upon or inundate the road surface)
+*Annotation for Category 1*: Long - tail scenarios of Category 1 refer to lane closures due to various reasons. Lane closure can block only the current lane, or multiple even all lanes. When creating such scenarios, drivers must be provided with space for thinking and emergency operations (e.g., needing to brake, change lanes to avoid, detour, turn around, etc.).
+2. Semi - Closed (Lane semi - closed, passable as appropriate)
+- 2.1 Static Obstacle Blockage
+-- 2.1.1 Road objects        (Road objects (goods, transport vehicles, parked vehicles) occupy part of the lane, and the remaining space can be used for single lane traffic or parallel traffic)
+-- 2.1.2 Aerial objects     (medium-sized objects suspended in the air, such as cardboard boxes, stones, and tree branches, falling from high altitude without contact with the ground)
+- 2.2 Dynamic Traffic Participant Blockage
+-- 2.2.1 Animals        (Animals occupy the road for pedestrians in the short term, vehicles can detour slowly or wait for command)
+-- 2.2.2 Low - speed Large Vehicles         (Harvesters, oversized vehicles, etc. occupy the lane at low speeds, causing semi closure)
+-- 2.2.3 Pedestrians        (Pedestrians temporarily block the lane, while vehicles can pass safely)
+-- 2.2.4 Non - motor Vehicles       (Non motorized vehicles are densely packed or some vehicles accidentally enter the motor vehicle lane, causing difficulties in passage but can be avoided)
+- 2.3 Temporary signal
+-- 2.3.1 Artificial signal             (traffic is commanded manually, For example, the person in front is holding a sign prohibiting passage)
+-- 2.3.2 Sign signal                    (indicated by temporary signal lights or signs, For example, placing a sign prohibiting passage)
+- 2.4 Special objects
+-- 2.4.1 special populations
+-- 2.4.2 Priority for Special Vehicles      (Emergency, Fire - fighting, etc. These special vehicles are in reverse and conflict with the vehicle's travel route)
+-- 2.4.3 Others
+- 2.5 Partial Pavement Abnormality
+-- 2.5.1 Impassable     (Collapse, etc., local severe damage requires detours, but the entire lane can pass through)
+-- 2.5.2 Not Recommended to Pass        (Pits, temporary bridges, etc. There is a certain degree of danger, but cars may be can pass through)(Note the distinction between this category and categories 2.5.1 and 2.5.3. This category neither completely blocks the passage of the ego vehicle like category 2.5.1, nor has it any impact on the passage of the ego vehicle like category 2.5.3. Class 2.5.2 falls between the two.)
+-- 2.5.3 Just barely possible       (Small puddles, minor obstacles, Can be noticed, but the car can drive with caution)
+*Annotation for Category 2*: Long - tail scenarios of Category 2 refer to lanes with obstacles or temporary traffic rule changes that require passing as appropriate. When creating such scenarios, room should be left for “judging whether passable, whether passable safely, and whether emergency driving operations are needed”.
+3. Surface Open but with Potential Obstacles (Lane surface is clear but there are hidden risks)
+- 3.1 Abnormal Deceleration or Gathering of Front Traffic Flow
+-- 3.1.1 All Turning Around     (A large number of vehicles collectively turned around at a distance ahead, without causing any collision, but resulting in a certain degree of road congestion)
+-- 3.1.2 All Changing Lanes       (A large number of vehicles ahead are changing lanes simultaneously, causing some degree of road congestion)
+-- 3.1.3 All Stopping         (Multiple cars ahead applied emergency brakes and turned on their brake lights, but it was not a normal traffic jam situation.)
+- 3.2 Inconsistent Information
+-- 3.2.1 Conflict with External Information     (Navigation shows clear but there are closure signs on site, etc.)
+-- 3.2.2 Conflict with On - site Signs         (The sign is closed but there are actually cars passing through)
+-- 3.2.3 Multi - source Information Conflict (Conflict among external information, on - site signs, and actual situation)
+- 3.3 Abnormal Behavior of Other Vehicles
+-- 3.3.1 Front Vehicle Sudden Braking       (The preceding car suddenly brakes abruptly, with obvious sudden braking signals (such as brake marks, brake lights, etc.)
+-- 3.3.2 Sudden Lane Changing       (The left/right vehicles merges or occupies the driving trajectory of the ego vehicle on the road)
+-- 3.3.3 Abnormal Information       (Front car/left and right cars, Vehicle shaking, tire burst, steering wheel loss of control, etc.)
+-- 3.3.4 Others     (Other bicycles suddenly have abnormalities)
+- 3.4 Low Visibility Blurred Objects
+-- 3.4.1 Weak Light     (Thick fog, nighttime, etc., significantly reduced visibility, difficult to distinguish lane boundaries and pedestrians)
+-- 3.4.2 Backlight, Strong Reflection       (Short term recognition difficulty caused by sunlight backlighting or reflective surfaces)
+- 3.5 Road Edge Overflow Risk
+-- 3.5.1 Objects    (Unparked cars, materials, etc., objects close to the edge of the lane, posing a risk of overflow)
+-- 3.5.2 People     (Pedestrians approaching or standing at the roadside pose potential risks)
+*Annotation for Category 3*: Long - tail scenarios of Category 3 refer to lanes without obstructive obstacles, but hidden dangers arise due to the behavior of other vehicles, external environment, or external information. When creating such scenarios, room should be left for “judging the situation ahead, whether it affects the vehicle itself, whether it can continue to pass safely, and whether emergency driving operations are needed”.
+Constraint: The target of PS is real long tail scenes or long tail blurred scenes, which pose certain risks to driving. If the scene after PS is between long tail and non long tail, or if the danger to driving is not obvious or clear, the goal should be reset.
+Constraint: The modified dangerous long tail scene must be able to avoid danger through driving operations, and cannot be a dangerous scene that cannot be avoided by driving. The requirement is that this hazardous element will affect the vehicle (note: the picture was taken by the front camera of the vehicle), and cannot be a hazardous element with minimal impact on the vehicle.
+Constraint: Note that the generated hazardous elements must be realistic and cannot be situations that do not occur at all. The added long tail elements should match the existing scene.
+Constraint: Please note that the first step is to determine whether the input category is a second level class (X.X) or a third level class (X.X.X). If the input category is a second level category (X.X), it is necessary to analyze the specific situation of the input scene image and select the third level category under this second level category for modification. Each third level category has an explanation in the classification information. If the input category is a third level category (X.X.X), modify it strictly according to the input third level category.
+Constraint: Attention!! For scenes with traffic lights, regardless of whether the scene is red or green, it is necessary to change the traffic lights to green! For traffic lights that are not red, there is no need to modify the color!(This is just a common requirement and does not belong to the long tail element).It is necessary to repeatedly emphasize in the generated prompt that the red light should be changed to a green light, and that the original red light should be changed to a green light instead of adding a green light. Attention! If there are no traffic lights in the scene, please do not add traffic lights! If there are traffic lights in the scene, only modify the existing traffic lights and do not add new ones.
+Constraint: If the added long tail elements are pedestrians or non motorized vehicles, they should not be too numerous or too densely packed. The size of other types of long tail elements added should conform to the category description. If there is no specific indication in the category, the size should be moderate.
+Constraint: The added long tail element should not be too close to the ego vehicle (this image was taken by the ego vehicle), as it leaves too little room for the ego vehicle to operate.
+Example from the front: A perspective view of a vehicle driving on a highway, Category is 2.5, which can be modified to show half of the road surface collapsing in front. Therefore, prompt is output:
+"Please make a local modification to an image depicting a 'car driving normally on a highway'. The specific requirements are as follows:
+Core Modification: Only add a 'half-collapsed' effect to the highway surface directly in front of the car. The collapse shape must follow real-world physical logic, showing a realistic state of broken pavement, irregular edges, and visible soil or hollow space below. Avoid cartoonish or exaggerated designs.
+Element Constraint: Except for the aforementioned road collapse, all other elements in the image must remain unchanged. This includes the car’s appearance and position, the remaining intact part of the highway, background environment, lighting, and color style. Do not add, delete, or adjust any other elements.
+Rendering Requirement: Maintain the realistic texture of the original image and avoid over-rendering the picture. The light, shadow, and color tone of the collapsed part must match the overall environment of the original image, ensuring the modified area blends seamlessly with the original without obvious editing traces."
+**This prompt is for reference only.
+Negative example: 1. A front view of a vehicle driving on a highway, it is recommended to modify it to show some non motorized vehicles ahead.
+**This is incorrect because it is not a fully defined long tail scene.
+2. It is recommended to add some large potholes to the left lane of vehicles driving on highways in the front view.
+**This is incorrect because although it is a long tail scene with dangerous elements, the impact of dangerous elements on the vehicle is very small, and the vehicle does not need to perform avoidance operations.
+3.It is recommended to wrap a thick steel wire around the vehicles traveling on the left lane of the highway ahead.
+**This is incorrect because although this is a long tail scene with dangerous elements that can affect the vehicle, this dangerous element is not realistic and will not occur in reality.
+4.For a scene where there are no trees on either side of a road, it is recommended to add a fallen tree on the road.
+**This is incorrect because it does not fit the original scene. It is also unrealistic to have fallen trees in an environment without trees.
+5.For the scene image with input modification category 2.2, it is recommended to modify it to add an out of control car in front.
+**This is incorrect because the requirement is for Class 2.2, and only one of the categories 2.2.1, 2.2.2, 2.2.3, and 2.2.4 included in Class 2.2 can be selected. "Adding an out of control car in front" is for Class 3.3.3, which does not meet the requirement.
+6.For scene images with input modification category 2.2.2, it is recommended to modify them by adding an out of control car in front.
+**This is incorrect because the requirement is assigned to the third level category and must strictly comply with Class 2.2.2 for adding low-speed large vehicles. "Adding an out of control car" falls under 3.3.3 and does not meet the requirement. Except for category 2.2.2, none of them meet the requirements.
+Output format: Just suitable for Gemini prompt. Please note, do not output any other content except prompt.
+Self inspection checklist:
+--Is it recommended that the modified scene is a true long tail scene? Request answer: Yes;
+--Is it recommended that the modified long tail scene be a scene with prominent long tail characteristics? Request answer: Yes;
+--Is the prompt output in accordance with the intent of the modification (ps)? Request answer: Yes;
+--Did you output any content other than prompt? Request answer: No；
+--Is the modified scene dangerous for driving and requires avoidance operations? Request answer: Yes；
+--Is the modified hazardous scenario unable to be avoided through driving operations? Request to return: No；
+--Did the added hazardous elements directly affect the vehicle? Request answer: Yes；
+--Does the added hazardous element require the vehicle to change its driving strategy? Request answer: Yes；
+--Is the added hazardous element reasonable and possible in reality? Request answer: Yes；
+--Is there no red traffic light in the modified image? Request answer: Yes;
+--Does the modified long tail scene belong to the input Category? Request answer: Yes；
+--Do the core modification suggestions in the prompt output meet the requirements of the input Category? Request answer: Yes;
+--If the input Category is a third level category, does it strictly correspond to and comply with this third level category? Request answer: Yes;
+--Are there too many long tail elements added for pedestrians/non motorized vehicles? Request answer: No;
+--Is the added long tail element too close to the ego vehicle, resulting in insufficient operational space for the ego vehicle? Request answer: No.

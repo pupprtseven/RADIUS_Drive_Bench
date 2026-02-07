@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.5",
+  "level3": "2.5.2",
+  "pic_name": "data371",
+  "pre_dec_file": "pre_dec_json\\data371_aligned.json",
+  "gt_json_file": "json/gt_json\\data371_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Road surface damage-Moderate",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Slow down and take a detour",
+  "pic_path": "..\\pic\\data371.png"
+}

@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.4",
+  "level3": "3.4.1",
+  "pic_name": "data282",
+  "pre_dec_file": "pre_dec_json\\data282_aligned.json",
+  "gt_json_file": "json/gt_json\\data282_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Poor visibility",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data282.png"
+}

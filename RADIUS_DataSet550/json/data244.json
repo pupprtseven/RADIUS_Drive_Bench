@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.3",
+  "level3": "3.3.2",
+  "pic_name": "data244",
+  "pre_dec_file": "pre_dec_json\\data244_aligned.json",
+  "gt_json_file": "json/gt_json\\data244_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Abnormal behavior of other vehicles-Sudden lane change",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Wait for avoidance and depending on the situation, proceed straight ahead or take a detour",
+  "pic_path": "..\\pic\\data244.png"
+}

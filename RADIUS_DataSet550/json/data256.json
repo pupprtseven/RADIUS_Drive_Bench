@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.5",
+  "level3": "2.5.2",
+  "pic_name": "data256",
+  "pre_dec_file": "pre_dec_json\\data256_aligned.json",
+  "gt_json_file": "json/gt_json\\data256_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Road surface damage-Moderate",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data256.png"
+}

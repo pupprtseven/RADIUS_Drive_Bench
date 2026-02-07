@@ -1,0 +1,17 @@
+{
+  "level1": "2",
+  "level2": "2.2",
+  "level3": "2.2.3",
+  "pic_name": "data41",
+  "is_longtail": "True",
+  "lt_ele": "Pedestrians",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Wait for avoidance and proceed straight ahead",
+  "pic_path": "..\\pic\\data41.png",
+  "pre_dec_file": "pre_dec_json\\data41_aligned.json",
+  "gt_json_file": "json/gt_json\\data41_gt.json"
+}

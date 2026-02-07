@@ -1,0 +1,14 @@
+{
+  "level1": "",
+  "level2": "",
+  "level3": "",
+  "pic_name": "data527",
+  "is_longtail": "False",
+  "lt_ele": null,
+  "acc_factors": [],
+  "Sup_description": "",
+  "post_dec": "",
+  "pic_path": "..\\pic\\data527.png",
+  "pre_dec_file": "pre_dec_json\\data527_aligned.json",
+  "gt_json_file": "json/gt_json\\data527_gt.json"
+}

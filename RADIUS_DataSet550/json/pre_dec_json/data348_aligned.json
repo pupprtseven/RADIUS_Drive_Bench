@@ -1,0 +1,43 @@
+{
+  "width": 1000,
+  "height": 2000,
+  "dt": 0.2,
+  "entities": [
+    {
+      "id": "ego",
+      "type": "ego",
+      "toward": "0",
+      "x": 500,
+      "y": 0,
+      "size": "Small",
+      "vx": 0,
+      "vy": 400,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_1",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 309,
+      "y": 1431,
+      "size": "Small",
+      "vx": 0,
+      "vy": -400,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_2",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 534,
+      "y": 1529,
+      "size": "Small",
+      "vx": 0,
+      "vy": 0,
+      "ay": 0,
+      "accel_mode": "Z"
+    }
+  ]
+}

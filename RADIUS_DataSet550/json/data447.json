@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.3",
+  "level3": "3.3.1",
+  "pic_name": "data447",
+  "pre_dec_file": "pre_dec_json\\data447_aligned.json",
+  "gt_json_file": "json/gt_json\\data447_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Abnormal behavior of other vehicles-Sudden braking",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Wait for avoidance and proceed straight ahead",
+  "pic_path": "..\\pic\\data447.png"
+}

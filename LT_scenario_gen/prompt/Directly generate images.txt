@@ -1,0 +1,105 @@
+Role: You are an expert in the research of intelligent driving long tail environments. Your goal is to enrich and improve the long tail scene based on natural language descriptions and specified categories given by users, and ultimately provide a prompt for generating images of the autonomous driving long tail scene using Gemini.
+Input: Some natural language descriptions of long tail scenes: {desc}.
+Category: {opt}
+Long tail scene classification:
+1. Fully Closed (Lane closed, not passable)
+- 1.1 Weather - caused Closure**
+-- 1.1.1 Snow
+-- 1.1.2 Rain
+-- 1.1.3 Wind
+-- 1.1.4 Others
+- 1.2 Full Closure for Construction/ Maintenance
+-- 1.2.1 Pavement Construction/ Repair
+-- 1.2.2 Large - equipment Occupation
+-- 1.2.3 Others
+- 1.3 Major Traffic Accident Closure
+-- 1.3.1 Dangerous Goods Transport Vehicle Accident (Leak/ Explosion Risk)
+-- 1.3.2 Multiple - vehicle Pile - up Leading to Full Closure
+-- 1.3.3 Road Structural Damage (Guardrail/ Bridge Deck Collapse)
+-- 1.3.4 Others
+- 1.4 Activity/ Event Control Closure
+-- 1.4.1 Mass Activities (Sports Events, Parades, etc.)
+-- 1.4.2 Political Activities (Traffic Police Control, etc.)
+-- 1.4.3 Others
+- 1.5 Natural Disaster/ Geological Disaster Closure
+-- 1.5.1 Pavement Itself Damaged by Disaster
+-- 1.5.2 Pavement Surface Disaster Deposition
+-- 1.5.3 Foreign Objects (Engineering Vehicles (leaving half lane), Fallen Objects, etc.)
+*Annotation for Category 1*: Long - tail scenarios of Category 1 refer to lane closures due to various reasons. Lane closure can block only the current lane, or multiple even all lanes. When creating such scenarios, drivers must be provided with space for thinking and emergency operations (e.g., needing to brake, change lanes to avoid, detour, turn around, etc.).
+2. Semi - Closed (Lane semi - closed, passable as appropriate)
+- 2.1 Static Obstacle Blockage
+-- 2.1.1 Foreign Objects (Engineering Vehicles (leaving half lane), Fallen Objects, etc.)
+-- 2.1.2 Pavement Itself (Settlement or Collapse Occupying Lane)
+- 2.2 Dynamic Traffic Participant Blockage
+-- 2.2.1 Animals
+-- 2.2.2 Low - speed Large Vehicles (Harvesters, Super - long Transporters, etc.)
+-- 2.2.3 Pedestrians
+-- 2.2.4 Non - motor Vehicles
+- 2.3 Temporary One - way Traffic
+-- 2.3.1 Manual Command for One - way Alternation
+-- 2.3.2 Signal Control for One - way Alternation
+- 2.4 Temporary Traffic Rule Adjustment
+-- 2.4.1 Temporary Permission by Signs (Temporary Reverse Driving, Tidal Lanes, etc.)
+-- 2.4.2 Priority for Special Vehicles (Emergency, Fire - fighting, etc.)
+-- 2.4.3 Others
+- 2.5 Partial Pavement Abnormality
+-- 2.5.1 Impassable (Collapse, etc.)
+-- 2.5.2 Not Recommended to Pass (Potholes, Temporary Bridges, etc.)
+-- 2.5.3 Passable (Small Puddles, etc.)
+*Annotation for Category 2*: Long - tail scenarios of Category 2 refer to lanes with obstacles or temporary traffic rule changes that require passing as appropriate. When creating such scenarios, room should be left for “judging whether passable, whether passable safely, and whether emergency driving operations are needed”.
+3. Surface Open but with Potential Obstacles (Lane surface is clear but there are hidden risks)
+- 3.1 Abnormal Deceleration or Gathering of Front Traffic Flow
+-- 3.1.1 All Turning Around (Unclosed Construction, etc.)
+-- 3.1.2 All Stopping (Unclosed Accident, etc.)
+-- 3.1.3 All Changing Lanes (Yielding to A Large Number of Pedestrians, etc.)
+- 3.2 Inconsistent Information
+-- 3.2.1 Conflict with External Information (Navigation shows clear but there are closure signs on site, etc.)
+-- 3.2.2 Conflict with On - site Signs (Signs show closure but actually passable)
+-- 3.2.3 Multi - source Information Conflict (Conflict among external information, on - site signs, and actual situation)
+- 3.3 Abnormal Behavior of Other Vehicles
+-- 3.3.1 Front Vehicle Sudden Braking
+-- 3.3.2 Sudden Lane Changing (Front/Left/Right Vehicle)
+-- 3.3.3 Abnormal Information (Front/Left/Right Vehicle) (Vehicle loss of control, etc.)
+-- 3.3.4 Others
+- 3.4 Low Visibility Blurred Objects
+-- 3.4.1 Weak Light (Thick Fog, Night, etc.)
+-- 3.4.2 Backlight, Strong Reflection
+- 3.5 Road Edge Overflow Risk
+-- 3.5.1 Objects (Improperly Parked Vehicles, Materials, etc.)
+-- 3.5.2 People
+*Annotation for Category 3*: Long - tail scenarios of Category 3 refer to lanes without obstructive obstacles, but hidden dangers arise due to the behavior of other vehicles, external environment, or external information. When creating such scenarios, room should be left for “judging the situation ahead, whether it affects the vehicle itself, whether it can continue to pass safely, and whether emergency driving operations are needed”.
+Constraint: Fill strictly according to the format. Try to use short sentences as much as possible. For important parts in the image, repeatedly emphasize them using Attention.
+Constraint: The target of generation is a true long tail scene or a long tail blurred scene and this long tail scene is dangerous for driving. If the scene after generating is between long tail and non long tail or the danger to driving is not significant and unclear,  it is incorrect. Regeneration！
+Constraint: The generate dangerous long tail scene must be able to avoid danger through driving operations, and cannot be a dangerous scene that cannot be avoided by driving. The requirement is that this hazardous element will affect the vehicle (note: the picture was taken by the front camera of the vehicle), and cannot be a hazardous element with minimal impact on the vehicle.
+Constraint: Note that the generated hazardous elements must be realistic and cannot be situations that do not occur at all.
+Format: A real dashcam style photo taken from the front camera of a car driving on the 。。。。 .
+......
+Attention, 。。。。
+......
+Attention，。。。。
+....
+The scene should present a natural and realistic effect, similar to the photos taken by a real driving recorder. Avoid using artistic rendering, painting effects, or exaggeration.
+Output format: just prompt suitable for Gemini.
+Positive example:
+--Input: There is a water leak at the top of the tunnel in this lane ahead of the car driving in the tunnel. Category: {2.1.1}
+--Output:A true dashcam style photo taken from the front camera of a car driving in a tunnel.
+There are two lanes in this tunnel.
+Attention, there are only two lanes!
+These two lanes are in opposite directions.
+There is a leak on the top of the tunnel and a small amount of water accumulation on the ground 100 meters ahead of the lane where this car is located.
+Attention, you can see liquid dripping into the air at the top.
+Note that there are no cars in front of this lane, but there are 3-4 cars on the other lane.
+The scene should present a natural and realistic effect, similar to the photos taken by a real driving recorder. Avoid using artistic rendering, painting effects, or exaggeration.
+Self inspection checklist:
+--Have you used Attention multiple times to emphasize key information? Request answer: Yes;
+--Did multiple short sentences accurately describe the long tail scene? Request answer: Yes;
+--Did you strictly follow the format? Request answer: Yes;
+--Have all long tail elements been overlooked, such as weather, roads, obstacles, faults, etc? Request answer: Yes;
+--Did you output any content other than prompt or NO? Request answer: No;
+--Is the generated scene dangerous for driving and requires avoidance operations? Request answer: Yes;
+--Is the generated hazardous scenario unable to be avoided through driving operations? Request answer: No;
+--Did the added hazardous elements directly affect the vehicle? Request answer: Yes;
+--Does the added hazardous element require the vehicle to change its driving strategy? Request answer: Yes;
+--Is the added hazardous element reasonable and possible in reality? Request answer: Yes;
+--Does the generated long tail scene belong to the input long tail scene category? Request answer: Yes.
+

@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.2",
+  "level3": "2.2.4",
+  "pic_name": "data92",
+  "pre_dec_file": "pre_dec_json\\data92_aligned.json",
+  "gt_json_file": "json/gt_json\\data92_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "non-motorized vehicle",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Wait for avoidance and proceed straight ahead",
+  "pic_path": "..\\pic\\data92.png"
+}

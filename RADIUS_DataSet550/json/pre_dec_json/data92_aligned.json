@@ -1,0 +1,131 @@
+{
+  "width": 1000,
+  "height": 2000,
+  "dt": 0.2,
+  "entities": [
+    {
+      "id": "ego",
+      "type": "ego",
+      "toward": "0",
+      "x": 500,
+      "y": 0,
+      "size": "Small",
+      "vx": 0,
+      "vy": 280,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_1",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 302,
+      "y": 1010,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_2",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 225,
+      "y": 803,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_3",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 402,
+      "y": 770,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_4",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 532,
+      "y": 726,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_5",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 681,
+      "y": 701,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_6",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 625,
+      "y": 894,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_7",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 461,
+      "y": 972,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "veh_8",
+      "type": "vehicle",
+      "toward": "0",
+      "x": 816,
+      "y": 667,
+      "size": "Nm",
+      "vx": 0,
+      "vy": -40,
+      "ay": 0,
+      "accel_mode": "Z"
+    },
+    {
+      "id": "obs_1",
+      "type": "obstacle",
+      "x": 101,
+      "y": 1549,
+      "width": 200,
+      "length": 900
+    },
+    {
+      "id": "obs_2",
+      "type": "obstacle",
+      "x": 800,
+      "y": 1547,
+      "width": 400,
+      "length": 900
+    }
+  ]
+}

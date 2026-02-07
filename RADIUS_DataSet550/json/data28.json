@@ -1,0 +1,17 @@
+{
+  "level1": "2",
+  "level2": "2.5",
+  "level3": "2.5.3",
+  "pic_name": "data28",
+  "is_longtail": "True",
+  "lt_ele": "Road surface damage-Light",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data28.png",
+  "pre_dec_file": "pre_dec_json\\data28_aligned.json",
+  "gt_json_file": "json/gt_json\\data28_gt.json"
+}

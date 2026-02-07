@@ -1,0 +1,17 @@
+{
+  "level1": "3",
+  "level2": "3.1",
+  "level3": "3.1.1",
+  "pic_name": "data453",
+  "is_longtail": "True",
+  "lt_ele": "Abnormal traffic flow-U-turn",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data453.png",
+  "pre_dec_file": "pre_dec_json\\data453_aligned.json",
+  "gt_json_file": "json/gt_json\\data453_gt.json"
+}

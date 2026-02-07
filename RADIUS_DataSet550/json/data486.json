@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.1",
+  "level3": "2.1.1",
+  "pic_name": "data486",
+  "pic_path": "..\\pic\\data486.png",
+  "pre_dec_file": "pre_dec_json\\data486_aligned.json",
+  "gt_json_file": "json/gt_json\\data486_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Ground obstacle",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage"
+}

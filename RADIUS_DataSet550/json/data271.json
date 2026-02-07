@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.4",
+  "level3": "2.4.2",
+  "pic_name": "data271",
+  "pre_dec_file": "pre_dec_json\\data271_aligned.json",
+  "gt_json_file": "json/gt_json\\data271_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Special vehicles",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data271.png"
+}

@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.5",
+  "level3": "2.5.1",
+  "pic_name": "data147",
+  "pic_path": "..\\pic\\data147.png",
+  "pre_dec_file": "pre_dec_json\\data147_aligned.json",
+  "gt_json_file": "json/gt_json\\data147_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Road surface damage-Severe",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage"
+}

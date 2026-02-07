@@ -1,0 +1,17 @@
+{
+  "level1": "1",
+  "level2": "1.4",
+  "level3": "1.4.2",
+  "pic_name": "data284",
+  "is_longtail": "True",
+  "lt_ele": "Event control",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and replan the route",
+  "pic_path": "..\\pic\\data284.png",
+  "pre_dec_file": "pre_dec_json\\data284_aligned.json",
+  "gt_json_file": "json/gt_json\\data284_gt.json"
+}

@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.2",
+  "level3": "2.2.4",
+  "pic_name": "data375",
+  "pre_dec_file": "pre_dec_json\\data375_aligned.json",
+  "gt_json_file": "json/gt_json\\data375_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "non-motorized vehicle",
+  "acc_factors": [
+    "Non-motor vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data375.png"
+}

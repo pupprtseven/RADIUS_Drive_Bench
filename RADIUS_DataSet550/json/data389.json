@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.4",
+  "level3": "2.4.2",
+  "pic_name": "data389",
+  "pre_dec_file": "pre_dec_json\\data389_aligned.json",
+  "gt_json_file": "json/gt_json\\data389_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Special vehicles",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Wait for avoidance and depending on the situation, proceed straight ahead or take a detour",
+  "pic_path": "..\\pic\\data389.png"
+}

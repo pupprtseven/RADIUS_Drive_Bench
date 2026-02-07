@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.2",
+  "level3": "1.2.2",
+  "pic_name": "data414",
+  "pre_dec_file": "pre_dec_json\\data414_aligned.json",
+  "gt_json_file": "json/gt_json\\data414_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Low-speed heavy vehicles",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data414.png"
+}

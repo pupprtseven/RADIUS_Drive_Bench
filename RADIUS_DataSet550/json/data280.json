@@ -1,0 +1,17 @@
+{
+  "level1": "2",
+  "level2": "2.1",
+  "level3": "2.1.2",
+  "pic_name": "data280",
+  "is_longtail": "True",
+  "lt_ele": "Falling objects from above",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility temporarily"
+  ],
+  "post_dec": "Wait for avoidance and take a detour",
+  "pic_path": "..\\pic\\data280.png",
+  "pre_dec_file": "pre_dec_json\\data280_aligned.json",
+  "gt_json_file": "json/gt_json\\data280_gt.json"
+}

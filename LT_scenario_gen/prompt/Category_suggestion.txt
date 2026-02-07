@@ -1,0 +1,107 @@
+Role: You are an expert in the research of intelligent driving long tail environments, with the goal of determining which categories of long tail environments or blurry long tail environment scene images can be reasonably converted from real photos taken by car front cameras through Photoshop. Based on the classification of long tail scenes, output categories suitable for modification.Note that for the recommended categories, they are divided into three levels for output: Best Recommendations (2 categories), Second level Recommendations (3 categories), and Other Reasonable Recommendations (remaining).Note that if none of the categories meet the recommended criteria, five 'non' can be given.
+Input: A real driving scene image from the front perspective of the car.{image}
+Long tail scene classification:
+1. Fully Closed (Lane closed, not passable)
+- 1.1 Weather - caused Closure      (ERF: A;ED: B;SAP: )
+-- 1.1.1 Snow   (The road is covered with snow piles or heavy snow, making it impossible for vehicles to pass through or driving at high risk (often accompanied by icing)
+-- 1.1.2 Rain   (rainstorm causes ponding/waterlogging on the road, wading is not feasible or there is a risk of scouring)
+-- 1.1.3 Others (Hail, dust, etc. make roads unsafe to pass through)
+- 1.2 Full Closure for Construction/ Maintenance       (ERF: A;ED: B;SAP: Construction facilities)
+-- 1.2.1 Pavement Construction/ Repair  (The construction unit occupies the road and causes closure, usually accompanied by construction fences, road cones, and obvious signs)
+-- 1.2.2 Large - equipment Occupation   (Large machinery or transportation equipment (cranes, tunnel excavation equipment) occupying the entire roadway causing impassable)
+-- 1.2.3 Others  (Other maintenance activities leading to closure (such as bridge deck maintenance)
+- 1.3 Major Traffic Accident Closure        (ERF: A;ED: B;SAP: )
+-- 1.3.1 Dangerous Goods Transport Vehicle Accident     (Dangerous goods vehicle accidents are accompanied by leakage, toxic/flammable risks, and require comprehensive closure treatment)
+-- 1.3.2 Multiple - vehicle Pile - up Leading to Full Closure   (Large scale traffic accident causing severe road blockage and rescue occupying the passage area)
+-- 1.3.3 Road Structural Damage     (Bridge deck collapse, guardrail damage, or bridge/roadbed damage causing impassable)
+-- 1.3.4 Others     (Other accidents that cause closure (such as fire spread)
+- 1.4 Activity/ Event Control Closure       (ERF: A;ED: A;SAP: )
+-- 1.4.1 Mass Activities        (Sports events, parades, temporary road closures for events, usually with official announcements and roadblocks)
+-- 1.4.2 Political Activities       (Traffic police control, closure for safety or political reasons (demonstrations, visits by state guests))
+-- 1.4.3 Others     (Other situations where temporary activities result in closure)
+- 1.5 Natural Disaster/ Geological Disaster Closure     (ERF: B;ED: B;SAP: )
+-- 1.5.1 Pavement Surface Disaster Deposition       (Landslides, mudslides, floods, tides, etc. encroach upon or inundate the road surface)
+*Annotation for Category 1*: Long - tail scenarios of Category 1 refer to lane closures due to various reasons. Lane closure can block only the current lane, or multiple even all lanes. When creating such scenarios, drivers must be provided with space for thinking and emergency operations (e.g., needing to brake, change lanes to avoid, detour, turn around, etc.).
+2. Semi - Closed (Lane semi - closed, passable as appropriate)
+- 2.1 Static Obstacle Blockage      (ERF: B;ED: C;SAP: )
+-- 2.1.1 Road objects        (Road objects (goods, transport vehicles, parked vehicles) occupy part of the lane, and the remaining space can be used for single lane traffic or parallel traffic)
+-- 2.1.2 Aerial objects (objects of moderate size such as cardboard boxes, stones, and tree branches falling from high altitude, not in contact with the ground, at a certain distance, and will fall to the ground within 3 seconds)
+- 2.2 Dynamic Traffic Participant Blockage      (ERF: B;ED: B;SAP: Large vehicles)
+-- 2.2.1 Animals        (Animals occupy the road for pedestrians in the short term, vehicles can detour slowly or wait for command)
+-- 2.2.2 Low - speed Large Vehicles         (Harvesters, oversized vehicles, etc. occupy the lane at low speeds, causing semi closure)
+-- 2.2.3 Pedestrians        (Pedestrians temporarily block the lane, while vehicles can pass safely)
+-- 2.2.4 Non - motor Vehicles       (Non motorized vehicles are densely packed or some vehicles accidentally enter the motor vehicle lane, causing difficulties in passage but can be avoided)
+- 2.3 Temporary One - way Traffic       (ERF: B;ED: C;SAP: Single lane)
+-- 2.3.1 Manual Command for One - way Alternation       (Single lane passage is alternately guided by manual command)
+-- 2.3.2 Signal Control for One - way Alternation       (Temporary traffic lights or traffic control allow one-way passage)
+- 2.4 Temporary Traffic Rule Adjustment     (ERF: B;ED: B;SAP: Special vehicles)
+-- 2.4.1 Temporary Permission by Signs      (Temporary reverse, tidal lanes, etc., to cope with occupying the road, temporarily use reverse or change the direction of the lane)
+-- 2.4.2 Priority for Special Vehicles      (Emergency, Fire - fighting, etc.)
+-- 2.4.3 Others
+- 2.5 Partial Pavement Abnormality      (ERF: B;ED: C;SAP:)
+-- 2.5.1 Impassable     (Collapse, etc., local severe damage requires detours, but the entire lane can pass through)
+-- 2.5.2 Not Recommended to Pass        (Pits, temporary bridges, etc. There is a certain degree of danger, but cars can pass through)
+-- 2.5.3 Passable       (Small puddles, minor obstacles, Can be noticed, but the car can drive normally)
+*Annotation for Category 2*: Long - tail scenarios of Category 2 refer to lanes with obstacles or temporary traffic rule changes that require passing as appropriate. When creating such scenarios, room should be left for “judging whether passable, whether passable safely, and whether emergency driving operations are needed”.
+3. Surface Open but with Potential Obstacles (Lane surface is clear but there are hidden risks)
+- 3.1 Abnormal Deceleration or Gathering of Front Traffic Flow      (ERF: B;ED: C;SAP: )
+-- 3.1.1 All Turning Around     (A large number of vehicles collectively make U-turns, indicating abnormal conditions ahead (non closed information))
+-- 3.1.2 All Stopping       (A large number of vehicles changing lanes simultaneously, possibly due to accidents/obstacles)
+-- 3.1.3 All Changing Lanes         (Multiple vehicles ahead are stationary but not officially closed (yielding, temporary gatherings, etc.))
+- 3.2 Inconsistent Information      (ERF: B;ED: B;SAP: Closed sign)
+-- 3.2.1 Conflict with External Information     (Navigation shows clear but there are closure signs on site, etc.)
+-- 3.2.2 Conflict with On - site Signs         (The sign is closed but there are actually cars passing through)
+-- 3.2.3 Multi - source Information Conflict (Conflict among external information, on - site signs, and actual situation)
+- 3.3 Abnormal Behavior of Other Vehicles       (ERF: B;ED: C;SAP: )
+-- 3.3.1 Front Vehicle Sudden Braking       (The preceding car suddenly brakes abruptly, with obvious sudden braking signals (such as brake marks, brake lights, etc.)
+-- 3.3.2 Sudden Lane Changing       (The adjacent vehicle merges or occupies the driving trajectory of the vehicle on the highway)
+-- 3.3.3 Abnormal Information       (Front car/left and right cars, vehicle smoking, tire burst, steering wheel loss of control, etc.)
+-- 3.3.4 Others     (Other bicycles suddenly have abnormalities)
+- 3.4 Low Visibility Blurred Objects        (ERF: B;ED: C;SAP: )
+-- 3.4.1 Weak Light     (Thick fog, nighttime, etc., significantly reduced visibility, difficult to distinguish lane boundaries and pedestrians)
+-- 3.4.2 Backlight, Strong Reflection       (Short term recognition difficulty caused by sunlight backlighting or reflective surfaces)
+- 3.5 Road Edge Overflow Risk       (ERF: B;ED: B;SAP: )
+-- 3.5.1 Objects    (Unparked cars, materials, etc., objects close to the edge of the lane, posing a risk of overflow)
+-- 3.5.2 People     (Pedestrians approaching or standing at the roadside pose potential risks)
+*Annotation for Category 3*: Long - tail scenarios of Category 3 refer to lanes without obstructive obstacles, but hidden dangers arise due to the behavior of other vehicles, external environment, or external information. When creating such scenarios, room should be left for “judging the situation ahead, whether it affects the vehicle itself, whether it can continue to pass safely, and whether emergency driving operations are needed”.
+The basic rule for determining whether a category can be recommended is:
+Firstly, identify the road blank rate in the picture according to the following definition
+ERF (Road Empty Rate)：
+- A: Empty rate > 50%
+- B: 20% < Empty rate < 50%
+- C: Empty rate < 20%
+Then determine the number of vehicle elements in the diagram, including motor vehicles and non motor vehicles. Note that only vehicles on this road are counted towards the quantity. Vehicles not on this road are not counted in the quantity.
+ED (Element Density):
+- A: 1~2 vehicles
+- B: 3~5 vehicles
+- C: 6~7 vehicles
+- D: 8+ vehicles
+Finally, check if there are any special elements in the diagram, and if so, record them in SAP. Note that SAP only includes the following types: {Construction facilities, Large vehicles, Single lane, Special vehicles, Closed sign}
+SAP (Anchor Point): If these elements are identified, it is recommended to modify to the corresponding category with priority.
+Based on the obtained ERF, ED, SAP, and the annotations on the second level class (X.X) in Long tail scene classification, the rules are as follows:
+- Categories that meet the ERF and ED conditions are considered modifiable (rule: under the same metric, satisfying A also satisfies B, satisfying B also satisfies C, and satisfying C also satisfies D). If there is a corresponding SAP, then this category is recommended first.
+- If the ERF index of a certain category is not met, then that category cannot be recommended (for example, if the ERF requirement of category 1.1 is A, but the ERF of a certain image is only B, then that image should not be recommended for category 1.1). If a certain type of ERF indicator is met but the ED indicator is not met, then this type should not be recommended as "best/second". Whether to be recommended into "other" is up to you, and you need to analyze based on the actual situation.
+Constraint: The goal of PS is to create realistic long tail scenes or blurry long tail scenes, which must be dangerous for driving. At the same time, there is enough space for this danger to be avoided. Only categories that meet these conditions are selected as suitable for modification.
+Constraint: Long tail scene categories suitable for modification must be able to avoid danger through driving operations, and cannot be a dangerous scene that cannot be avoided by driving. The requirement is that this hazardous element will affect the vehicle (note: the picture was taken by the front camera of the vehicle), and cannot be a hazardous element with minimal impact on the vehicle.
+Constraint: Please note that the hazardous elements in the selected category must be realistic, suitable for addition, and cannot be situations that do not occur at all.
+Example from the front: A scene picture of driving on an open road, there are some vehicles ahead. It is suitable for modification to 1.1, 1.2, 1.3, 1.5, 2.1, 2.2, 2.4, 2.5, 3.2, 3.3, 3.4, 3.5. So the output should be: "best: 2.1, 3.3; second: 2.2, 2.5, 1.3; other: 1.1, 1.2, 1.3, 1.5, 2.4,  3.2, 3.4, 3.5".
+**This is just a simple example, for reference only.
+Negative example: 1. The front view of vehicles driving on highways is recommended to be modified to Class 1.4.
+**This is incorrect because the regulation of activities (mass, political activities) on highways is not in line with reality.
+2. It is recommended to modify the front view of traffic jams on the highway to categories 1.2 and 2.1.
+**This is all incorrect because the congested road surface does not have enough space to be changed to Class 1.2; And static obstacles of Class 2.1 do not pose sufficient danger in traffic jams and do not require avoidance operations.
+3. Front view of driving on an open road. Suggest modifying to 1.3, 2.1, 3.3.
+**This is incomplete because although these classes are correct, there are many other classes in this scenario that are also suitable for modification, so there should be more output classes.
+Output format: Categories in the classification, accurate to the second level category. The format is: "best:,; second:,,; other:", where "best" consists of two categories, "second" consists of three categories, and the rest are placed in "other". Please note that do not output any content other than categories.
+Self inspection checklist:
+--Did you output any content other than the output category? Request answer: No;
+--Is the output category suitable for the scene in the image? Request answer: Yes;
+--Is the output category accurate to the second level category (X.X)? Request answer: Yes;
+--Does the output category conform to the long tail scene classification? Request answer: Yes;
+--Is the output category as diverse as possible? Request answer: Yes;
+--Are there too many categories in the output that are not rigorous enough? Request answer: No;
+--Has it been divided into the best as required; sencond; other？ Request answer: Yes;
+--Has it been output to a third level category, such as X.X.X? Requset answer: No;
+--Is the indicator judgment of ERF, ED, and SAP strictly followed? Request answer: Yes;
+--Are classes that do not meet ERF not recommended, even if such ED and SAP are met? Request answer: Yes;
+--For graphs with no classes that can be recommended (ERF metric C), are there five 'non' given? Request answer: Yes.

@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.2",
+  "level3": "1.2.2",
+  "pic_name": "data502",
+  "pre_dec_file": "pre_dec_json\\data502_aligned.json",
+  "gt_json_file": "json/gt_json\\data502_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Large-scale equipment",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Wait for avoidance and take a detour",
+  "pic_path": "..\\pic\\data502.png"
+}

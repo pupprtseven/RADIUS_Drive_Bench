@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.5",
+  "level3": "2.5.1",
+  "pic_name": "data505",
+  "pic_path": "..\\pic\\data505.png",
+  "pre_dec_file": "pre_dec_json\\data505_aligned.json",
+  "gt_json_file": "json/gt_json\\data505_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Road surface damage-Severe",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and replan the route"
+}

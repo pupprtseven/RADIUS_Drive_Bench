@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.3",
+  "level3": "1.3.2",
+  "pic_name": "data431",
+  "pre_dec_file": "pre_dec_json\\data431_aligned.json",
+  "gt_json_file": "json/gt_json\\data431_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Large-scale accident",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and replan the route",
+  "pic_path": "..\\pic\\data431.png"
+}

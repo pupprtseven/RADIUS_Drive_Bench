@@ -1,0 +1,18 @@
+{
+  "level1": "3",
+  "level2": "3.5",
+  "level3": "3.5.1",
+  "pic_name": "data192",
+  "pre_dec_file": "pre_dec_json\\data192_aligned.json",
+  "gt_json_file": "json/gt_json\\data192_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Ground obstacle",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility temporarily"
+  ],
+  "post_dec": "Wait for avoidance and take a detour",
+  "pic_path": "..\\pic\\data192.png"
+}

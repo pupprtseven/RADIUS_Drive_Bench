@@ -1,0 +1,17 @@
+{
+  "level1": "1",
+  "level2": "1.2",
+  "level3": "1.2.1",
+  "pic_name": "data22",
+  "is_longtail": "True",
+  "lt_ele": "Construction work",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and request instructions",
+  "pic_path": "..\\pic\\data22.png",
+  "pre_dec_file": "pre_dec_json\\data22_aligned.json",
+  "gt_json_file": "json/gt_json\\data22_gt.json"
+}

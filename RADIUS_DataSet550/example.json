@@ -1,0 +1,16 @@
+{
+  "level1": "1",
+  "level2": "1.1",
+  "level3": "1.1.1",
+  "pic_name": "....",
+  "pic_path": "..../...png",
+  "pre_dec_file": ".../...json",
+  "gt_json_file": "",
+  "is_longtail": "True/False",
+  "Sup_description": "........",
+  "lt_ele": "Dangerous goods vehicle/pedestrian/.....",
+  "acc_factors": "cars passing ahead/Can be bypassed/.....",
+  "COT":".......",
+  "post_dec": "Reverse evacuation/Stay still/Detour beyond/......",
+  "is_transfer2p": "Yes/No"
+}

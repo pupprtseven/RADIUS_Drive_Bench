@@ -1,0 +1,18 @@
+{
+  "level1": "1",
+  "level2": "1.4",
+  "level3": "1.4.2",
+  "pic_name": "data110",
+  "pre_dec_file": "pre_dec_json\\data110_aligned.json",
+  "gt_json_file": "json/gt_json\\data110_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Event control",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Affects own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Park safely and replan the route",
+  "pic_path": "..\\pic\\data110.png"
+}

@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.2",
+  "level3": "2.2.4",
+  "pic_name": "data206",
+  "pre_dec_file": "pre_dec_json\\data206_aligned.json",
+  "gt_json_file": "json/gt_json\\data206_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "non-motorized vehicle",
+  "acc_factors": [
+    "No vehicles ahead",
+    "Affects own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Slow down and take a detour",
+  "pic_path": "..\\pic\\data206.png"
+}

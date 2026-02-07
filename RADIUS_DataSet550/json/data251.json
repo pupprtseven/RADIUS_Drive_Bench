@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.3",
+  "level3": "2.3.2",
+  "pic_name": "data251",
+  "pre_dec_file": "pre_dec_json\\data251_aligned.json",
+  "gt_json_file": "json/gt_json\\data251_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Command signals/temporary signs",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "Lane-borrowing possible"
+  ],
+  "post_dec": "Park safely and request instructions",
+  "pic_path": "..\\pic\\data251.png"
+}

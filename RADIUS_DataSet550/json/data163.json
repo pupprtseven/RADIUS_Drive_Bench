@@ -1,0 +1,18 @@
+{
+  "level1": "2",
+  "level2": "2.2",
+  "level3": "2.2.3",
+  "pic_name": "data163",
+  "pre_dec_file": "pre_dec_json\\data163_aligned.json",
+  "gt_json_file": "json/gt_json\\data163_gt.json",
+  "is_longtail": "True",
+  "Sup_description": "",
+  "lt_ele": "Pedestrians",
+  "acc_factors": [
+    "Vehicles ahead",
+    "Does not affect own vehicle's passage",
+    "No lane-borrowing possibility"
+  ],
+  "post_dec": "Low-speed straight passage",
+  "pic_path": "..\\pic\\data163.png"
+}

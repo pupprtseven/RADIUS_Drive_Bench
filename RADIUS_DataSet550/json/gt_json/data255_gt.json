@@ -1,0 +1,12 @@
+{
+  "source_scene": "pre_dec_json\\data255_aligned.json",
+  "num_total_controls": 63,
+  "num_valid_controls": 1,
+  "valid_controls": [
+    {
+      "vx": 100,
+      "ay": -300,
+      "label": "1"
+    }
+  ]
+}
