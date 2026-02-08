@@ -48,7 +48,7 @@ Go to the `dataset_gen` folder:
 }
 ```
 
-4. Fill in the category in `choose.json` under `"choose": ""` (manually or automatically via your own implementation).
+4. Fill in the category in `choose.json` under `"choose": ""` (manually or automatically via your own implementation). If the contents of `choose.json` and `opt.json` are not written correctly, you can execute `save_choose_to_json.py` and `save_opt_to_json.py` in the `utils` module to write the template content.
 5. Run `main(mism_step2(1))` in `M_img_S_mdf_step2.py`.
 6. Generated long-tail scenarios will appear in `output_img/`.
 

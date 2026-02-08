@@ -5,7 +5,7 @@ from Py_Lightweight_IVI.evaluation_framework.core.updater import Simulator
 
 if __name__ == '__main__':
 
-    file_path= "../evaluation_framework/scene_json/test2.json"
+    file_path= "YOUR_PATH_HERE"
     file_name = os.path.splitext(os.path.basename(file_path))[0]
     scene = load_scene(file_path)
 

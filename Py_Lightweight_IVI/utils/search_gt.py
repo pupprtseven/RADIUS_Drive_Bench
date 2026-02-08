@@ -39,7 +39,7 @@ if __name__ == '__main__':
             control["label"] = ""  # Default label (can be customized if needed)
 
     # Output directory for ground-truth results
-    output_folder = "../GT_result"  # Modify this path if a different output location is desired
+    output_folder = "YOUR_PATH_HERE"  # Modify this path if a different output location is desired
     os.makedirs(output_folder, exist_ok=True)
 
     # Derive a short name for the output file

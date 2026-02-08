@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Rect Map Tool (centers display + filename)</title>
+<style>
+  html,body{height:100%;margin:0;font-family:Arial, Helvetica, sans-serif}
+  .container{display:flex;height:100vh;box-sizing:border-box;padding:8px}
+  .left{flex:1;display:flex;align-items:flex-start;justify-content:center;overflow:hidden}
+  #canvas-wrap{position:relative;transform-origin:0 0}
+  #canvas{border:1px solid #000;background:#fff;display:block}
+  .right{width:340px;padding-left:10px;border-left:1px solid #ddd}
+  .control{margin-bottom:8px}
+  label{display:block;font-size:13px;margin-bottom:4px}
+  select,input,button{width:100%;box-sizing:border-box;padding:6px;font-size:14px}
+  #export{margin-top:10px}
+  #modeDisplay{font-size:12px;color:#333;margin-top:6px}
+  .small-btns{display:flex;gap:6px}
+  .small-btns button{flex:1}
+  .note{font-size:12px;color:#666;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="left">
+    <div id="canvas-wrap">
+      <canvas id="canvas" width="1000" height="2000"></canvas>
+    </div>
+  </div>
+  <div class="right">
+    <h4>Controls</h4>
+    <div class="control">
+      <label>Mode</label>
+      <button id="toggleMode">Switch: Draw / PlacePreset</button>
+      <div id="modeDisplay">Current: draw</div>
+    </div>
+    <div class="control">
+      <label>Preset Sizes (one cell = 10 units)</label>
+      <select id="preset">
+        <option value="90,230">90 × 230</option>
+        <option value="230,90">230 × 90</option>
+        <option value="130,400">130 × 400</option>
+        <option value="400,130">400 × 130</option>
+        <option value="35,90">35 × 90</option>
+        <option value="90,35">90 × 35</option>
+        <option value="30,30">30 × 30</option>
+      </select>
+    </div>
+    <div class="control">
+      <label>Label</label>
+      <select id="label">
+        <option value="veh">veh</option>
+        <option value="ped">ped</option>
+        <option value="obs">obs</option>
+      </select>
+    </div>
+    <div class="control small-btns">
+      <input id="filename" type="text" value="rects.json" placeholder="filename.json" />
+    </div>
+    <div class="control small-btns">
+      <button id="export">Export JSON</button>
+      <button id="clear">Clear All</button>
+    </div>
+    <div class="control small-btns">
+      <button id="confirmPlace" disabled>Confirm Placement</button>
+      <button id="cancelPlace" disabled>Cancel</button>
+    </div>
+    <div class="control small-btns">
+      <button id="deleteSel" disabled>Delete Selected</button>
+      <button id="deselect">Deselect</button>
+    </div>
+
+    <hr />
+    <div class="control">
+      <label>Add rectangle by size (will create pending at center)</label>
+      <div style="display:flex;gap:6px">
+        <input id="addW" type="number" placeholder="width" value="90" style="flex:1" />
+        <input id="addH" type="number" placeholder="height" value="90" style="flex:1" />
+      </div>
+      <button id="addBySize">Add Rect by Size (create pending at center)</button>
+    </div>
+
+    <div class="note">
+      Grid: one cell == 10 units. Canvas pixels are drawing units; grid spacing is 50 px per 10 units. Ego rectangle bottom is fixed to y=0 (x-axis).
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== CONFIG ==========
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('canvas-wrap');
+const modeDisplay = document.getElementById('modeDisplay');
+let mode = 'draw'; // 'draw' or 'preset'
+const gridPx = 50; // one grid cell in pixels
+const gridUnit = 10; // one cell == 10 units (as requested)
+
+// state
+let rects = [];
+let pendingRect = null; // {x,y,w,h,label} - not yet confirmed (normalized)
+let isDrawing = false; // when creating a new hand-drawn rect
+let startX = 0, startY = 0; // logical canvas coords (y increases upward)
+let selectedIndex = -1; // index in rects for selected rectangle
+let dragOffset = null; // for moving existing rects {dx,dy}
+
+// helper: coordinate flip because y increases upward in logical coords
+function toCanvasY(y){ return canvas.height - y; }
+function fromCanvasY(py){ return canvas.height - py; }
+
+// normalize a rect so that x,y are bottom-left and w,h are positive
+function normalizeRect(r){
+  const x1 = Math.min(r.x, r.x + r.w);
+  const x2 = Math.max(r.x, r.x + r.w);
+  const y1 = Math.min(r.y, r.y + r.h); // bottom
+  const y2 = Math.max(r.y, r.y + r.h); // top
+  return { x: x1, y: y1, w: x2 - x1, h: y2 - y1, label: r.label };
+}
+
+// initial ego rect: bottom at y=0
+const EGO = { x:455, y:0, w:90, h:115, label:'ego' };
+rects.push(Object.assign({}, EGO));
+
+function drawGrid(){
+  const w = canvas.width, h = canvas.height;
+  ctx.save();
+  ctx.clearRect(0,0,w,h);
+  // light grid
+  ctx.strokeStyle = '#eee'; ctx.lineWidth = 1;
+  for(let px=0; px<=w; px+=gridPx){ ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,h); ctx.stroke(); }
+  for(let py=0; py<=h; py+=gridPx){ ctx.beginPath(); ctx.moveTo(0,py); ctx.lineTo(w,py); ctx.stroke(); }
+  // draw x-axis (bottom) and y-axis (left) thicker
+  ctx.strokeStyle = '#000'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0,h); ctx.lineTo(w,h); ctx.stroke(); // x-axis at bottom
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,h); ctx.stroke(); // y-axis at left
+  // axis labels: x along bottom, y along left (units)
+  ctx.fillStyle='black'; ctx.font='12px Arial';
+  for(let px=0; px<=w; px+=gridPx){ const val = (px / gridPx) * gridUnit; ctx.fillText(val.toString(), px+2, h-2); }
+  for(let py=0; py<=h; py+=gridPx){ const unitVal = ((h - py)/gridPx) * gridUnit; ctx.fillText(unitVal.toString(), 2, py+12); }
+  ctx.restore();
+}
+
+function redraw(){
+  drawGrid();
+  // draw existing rects
+  rects.forEach((r,i)=>{
+    const drawY = toCanvasY(r.y + r.h);
+    ctx.save();
+    ctx.lineWidth = (i===selectedIndex)?2:1;
+    ctx.strokeStyle = (i===selectedIndex)?'blue':'black';
+    ctx.strokeRect(r.x, drawY, r.w, -r.h);
+    ctx.font='12px Arial'; ctx.fillStyle='black';
+    ctx.fillText(r.label, r.x+4, drawY+12);
+    // if selected, display center coordinates near it
+    if(i===selectedIndex){
+      const cx = (r.x + r.w/2).toFixed(2);
+      const cy = (r.y + r.h/2).toFixed(2);
+      const text = `center: (${cx}, ${cy})`;
+      // draw background box
+      const tx = r.x + r.w + 6;
+      const ty = drawY + 12; // canvas y of top area
+      ctx.fillStyle='rgba(255,255,255,0.9)';
+      const tw = ctx.measureText(text).width + 6;
+      ctx.fillRect(tx-3, ty-12, tw, 16);
+      ctx.fillStyle='black';
+      ctx.fillText(text, tx, ty);
+    }
+    ctx.restore();
+  });
+  // pending rect (ghost)
+  if(pendingRect){
+    const r = pendingRect; const drawY = toCanvasY(r.y + r.h);
+    ctx.save(); ctx.setLineDash([6,4]); ctx.strokeStyle='red'; ctx.strokeRect(r.x, drawY, r.w, -r.h);
+    ctx.fillStyle='rgba(255,0,0,0.08)'; ctx.fillRect(r.x, drawY, r.w, -r.h); ctx.setLineDash([]);
+    // display pending center coordinates too
+    const pcx = (r.x + r.w/2).toFixed(2); const pcy = (r.y + r.h/2).toFixed(2);
+    const ptext = `center: (${pcx}, ${pcy})`;
+    const ptx = r.x + r.w + 6; const pty = drawY + 12;
+    ctx.fillStyle='rgba(255,255,255,0.9)'; const ptw = ctx.measureText(ptext).width + 6; ctx.fillRect(ptx-3, pty-12, ptw, 16);
+    ctx.fillStyle='black'; ctx.fillText(ptext, ptx, pty);
+    ctx.restore();
+  }
+}
+
+function applyScale(){
+  const availableW = window.innerWidth - 340 - 16; // right panel width + paddings
+  const availableH = window.innerHeight - 16;
+  const sx = availableW / canvas.width; const sy = availableH / canvas.height;
+  const scale = Math.min(sx, sy, 1);
+  wrap.style.transform = `scale(${scale})`;
+}
+window.addEventListener('resize', applyScale); applyScale();
+wrap.addEventListener('wheel', e=>e.preventDefault(), {passive:false});
+
+// convert mouse event to logical canvas coords (x right, y up)
+function getCanvasPos(e){
+  const rectB = canvas.getBoundingClientRect();
+  const sx = canvas.width / rectB.width; const sy = canvas.height / rectB.height;
+  const x = (e.clientX - rectB.left) * sx; const py = (e.clientY - rectB.top) * sy;
+  return { x, y: fromCanvasY(py) };
+}
+
+// hit test
+function hitTest(px, py){ for(let i=rects.length-1;i>=0;i--){ const r=rects[i]; const x1=r.x, x2=r.x + r.w; const y1=r.y, y2=r.y + r.h; if(px>=x1 && px<=x2 && py>=y1 && py<=y2) return i; } return -1; }
+
+// pending hit
+function hitPending(px, py){ if(!pendingRect) return false; const r=pendingRect; const x1=r.x, x2=r.x + r.w; const y1=r.y, y2=r.y + r.h; return (px>=x1 && px<=x2 && py>=y1 && py<=y2); }
+
+// mouse handlers
+let pendingDrag=false, pendingDragOffset={dx:0,dy:0};
+canvas.addEventListener('mousedown', (e)=>{
+  const p = getCanvasPos(e);
+  // select existing rect
+  const idx = hitTest(p.x,p.y);
+  if(idx!==-1){ selectedIndex=idx; document.getElementById('deleteSel').disabled=false; redraw(); dragOffset={dx: p.x - rects[idx].x, dy: p.y - rects[idx].y}; canvas.addEventListener('mousemove', existingDragMove); canvas.addEventListener('mouseup', existingDragEnd, {once:true}); return; }
+  selectedIndex=-1; document.getElementById('deleteSel').disabled=true; redraw();
+  // if pending exists and clicked inside -> start dragging pending
+  if(pendingRect && hitPending(p.x,p.y)){ pendingDrag=true; pendingDragOffset.dx = p.x - pendingRect.x; pendingDragOffset.dy = p.y - pendingRect.y; canvas.addEventListener('mousemove', pendingDragMove); canvas.addEventListener('mouseup', pendingDragEnd, {once:true}); return; }
+  // otherwise start new depending on mode
+  if(mode==='draw'){ isDrawing=true; startX=p.x; startY=p.y; }
+  else { const [w,h]=document.getElementById('preset').value.split(',').map(Number); const label=document.getElementById('label').value; // create normalized pending centered at click
+    const raw = { x: p.x - w/2, y: p.y - h/2, w: w, h: h, label };
+    pendingRect = normalizeRect(raw); enablePendingControls(true); redraw(); }
+});
+
+canvas.addEventListener('mousemove', (e)=>{
+  const p = getCanvasPos(e);
+  if(isDrawing){ const w = p.x - startX; const h = p.y - startY; // create pending normalized so confirm will store normalized
+    const raw = { x:startX, y:startY, w, h, label: document.getElementById('label').value };
+    pendingRect = normalizeRect(raw); enablePendingControls(true); redraw(); }
+});
+
+canvas.addEventListener('mouseup', (e)=>{ if(isDrawing){ isDrawing=false; redraw(); } });
+
+function pendingDragMove(e){ const p=getCanvasPos(e); pendingRect.x = p.x - pendingDragOffset.dx; pendingRect.y = p.y - pendingDragOffset.dy; redraw(); }
+function pendingDragEnd(e){ pendingDrag=false; canvas.removeEventListener('mousemove', pendingDragMove); }
+
+function existingDragMove(e){ const p=getCanvasPos(e); if(selectedIndex>=0 && dragOffset){ rects[selectedIndex].x = p.x - dragOffset.dx; rects[selectedIndex].y = p.y - dragOffset.dy; redraw(); } }
+function existingDragEnd(e){ canvas.removeEventListener('mousemove', existingDragMove); dragOffset=null; }
+
+// controls
+function enablePendingControls(enable){ document.getElementById('confirmPlace').disabled = !enable; document.getElementById('cancelPlace').disabled = !enable; }
+
+document.getElementById('toggleMode').onclick = ()=>{ mode = (mode==='draw')?'preset':'draw'; modeDisplay.textContent = 'Current: ' + mode; };
+
+document.getElementById('confirmPlace').onclick = ()=>{ if(!pendingRect) return; // normalize again to be safe
+  const nr = normalizeRect(pendingRect);
+  // if ego label, ensure bottom at y=0
+  if(nr.label === 'ego') nr.y = 0;
+  rects.push(nr); pendingRect=null; enablePendingControls(false); redraw(); };
+
+document.getElementById('cancelPlace').onclick = ()=>{ pendingRect=null; enablePendingControls(false); redraw(); };
+
+document.getElementById('deleteSel').onclick = ()=>{ if(selectedIndex>=0){ rects.splice(selectedIndex,1); selectedIndex=-1; document.getElementById('deleteSel').disabled=true; redraw(); } };
+
+document.getElementById('deselect').onclick = ()=>{ selectedIndex=-1; document.getElementById('deleteSel').disabled=true; redraw(); };
+
+// Add by size: create pending rect at logical center of canvas
+document.getElementById('addBySize').onclick = ()=>{
+  const w = parseFloat(document.getElementById('addW').value) || 10;
+  const h = parseFloat(document.getElementById('addH').value) || 10;
+  const label = document.getElementById('label').value;
+  // place at logical center
+  const cx = canvas.width/2; const cy = canvas.height/2;
+  const raw = { x: cx - w/2, y: cy - h/2, w, h, label };
+  pendingRect = normalizeRect(raw);
+  enablePendingControls(true); redraw();
+};
+
+// export json
+document.getElementById('export').onclick = ()=>{
+  const filenameRaw = (document.getElementById('filename').value || 'rects.json').trim();
+  const filename = filenameRaw.endsWith('.json') ? filenameRaw : filenameRaw + '.json';
+  const out = rects.map(r=>({
+    centerX: +(r.x + r.w/2).toFixed(2),
+    centerY: +(r.y + r.h/2).toFixed(2),
+    width: +Math.abs(r.w).toFixed(2),
+    height: +Math.abs(r.h).toFixed(2),
+    label: r.label
+  }));
+  const blob = new Blob([JSON.stringify(out, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+};
+
+document.getElementById('clear').onclick = ()=>{ rects = []; rects.push(Object.assign({}, EGO)); selectedIndex=-1; document.getElementById('deleteSel').disabled=true; redraw(); };
+
+// initial draw
+redraw();
+</script>
+</body>
+</html>
