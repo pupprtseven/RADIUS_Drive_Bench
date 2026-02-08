@@ -1,6 +1,5 @@
 # RADIUS_Drive_Bench
-
-RADIUS_Drive_Bench is a research-oriented benchmark suite for safety-critical driving scenarios. It combines long-tail scenario generation, a lightweight in-vehicle infotainment (IVI) simulation environment, a standardized evaluation workflow, and an initial curated dataset.
+We introduce RADIUS-Drive (Risk-Aware DIagnostic Understanding & Safety) to evaluate safety-critical driving beyond outcome correctness. RADIUS-Drive targets the hazardous failure mode of Pseudo-Correctness, where the final action appears correct while risk triggering, key-factor localization, or validity assessment is incorrect or missing. To mitigate long-tail scarcity, we build a scalable safety-critical scenario generation pipeline that supports reference-conditioned con-trollable injection within realistic visual distributions and reference-free controllable generation, through a unified interface that binds risk elements, validity, and decision logic. To mitigate process blindness, we propose the SAR diagnostic protocol, a verifiable metacognitive chain of Safety → Awareness → Reasoning. Safety evaluates conservative baseline decisions under uncertainty, Awareness assesses risk triggering and localization by requiring identification of safety-critical anomalies and the dominant long-tail factor, and Reasoning audits causal validity and decision consistency from intermediate commitments to the final action. Accordingly, we adapt a suite of consistency-centric metrics.
 
 ## Repository Overview
 
