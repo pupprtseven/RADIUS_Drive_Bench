@@ -71,4 +71,4 @@ These components are under active development and are not required for using the
 - For integration with the full benchmark workflow, see the repository root README and the `RADIUS_benchmark` module documentation.
 
 ## License
-No license is declared here. Please check the repository root for licensing details.
+This project is released under the terms of the MIT License. The complete license text can be found in the LICENSE file located at the root of this repository.

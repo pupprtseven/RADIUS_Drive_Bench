@@ -39,4 +39,4 @@ The first release of the safety-critical long-tail scenario dataset, including:
 Contributions are welcome. Please open an issue or submit a pull request with clear descriptions and reproducible steps.
 
 ## License
-No license is declared here. Please check individual modules or the repository root for licensing details.
+This project is released under the terms of the MIT License. The complete license text can be found in the LICENSE file located at the root of this repository.

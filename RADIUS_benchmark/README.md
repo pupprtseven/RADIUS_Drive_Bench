@@ -237,4 +237,4 @@ print(summary["statistics"])
 
 ## License
 
-No license file is currently present in this repository. Add one before external distribution.
+This project is released under the terms of the MIT License. The complete license text can be found in the LICENSE file located at the root of this repository.

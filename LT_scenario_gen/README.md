@@ -67,4 +67,4 @@ Go to the `dataset_gen` folder:
 Issues and PRs are welcome, especially for adding automatic category selection or improving documentation.
 
 ## License
-No license is declared here. Please contact the maintainers or check the repository root for licensing details.
+This project is released under the terms of the MIT License. The complete license text can be found in the LICENSE file located at the root of this repository.
