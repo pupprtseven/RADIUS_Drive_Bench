@@ -1,8 +1,16 @@
 import json
 import os
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from LT_scenario_gen.utils.path_utils import OUTPUT_DIR
 
 
-def get_choose_by_filename(target_filename, json_path="../output_pic/choose.json"):
+def get_choose_by_filename(target_filename, json_path=OUTPUT_DIR / "choose.json"):
     """
     Retrieve the corresponding 'choose' value from choose.json based on the image filename (e.g., image2.png).
 
@@ -10,6 +18,8 @@ def get_choose_by_filename(target_filename, json_path="../output_pic/choose.json
     :param json_path: Path to choose.json
     :return: Corresponding 'choose' value (str); returns None if no matching entry is found
     """
+    json_path = Path(json_path)
+
     if not os.path.exists(json_path):
         print(f"Error: File {json_path} does not exist")
         return None

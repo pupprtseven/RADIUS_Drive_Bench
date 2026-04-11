@@ -4,6 +4,13 @@ import base64
 import requests
 import datetime
 import json
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from LT_scenario_gen.utils import (
     pic_2_txt_opt,
     pic_2_txt,
@@ -12,10 +19,16 @@ from LT_scenario_gen.utils import (
     save_choose_to_json,
     get_choose,
 )
+from LT_scenario_gen.utils.path_utils import (
+    ERROR_LOG_PATH,
+    OUTPUT_DIR,
+    PROMPT_DIR,
+    UTILS_DIR,
+    load_api_config,
+)
 
 # Load configuration file (API keys and service endpoint)
-with open("../utils/config.json", "r") as f:
-    config = json.load(f)
+config = load_api_config()
 
 API_KEY = config.get("OPENAI_API_KEY")
 BASE_URL = config.get("BASE_URL")
@@ -25,12 +38,12 @@ if not API_KEY or not BASE_URL:
     raise ValueError("Missing required configuration in config.json")
 
 # Prompt template files
-PROMPT_FILE_1 = "../prompt/Category_suggestion.txt"
-PROMPT_FILE_2 = "../prompt/Generate_modification_suggestions.txt"
+PROMPT_FILE_1 = PROMPT_DIR / "Category_suggestion.txt"
+PROMPT_FILE_2 = PROMPT_DIR / "Generate_modification_suggestions.txt"
 
 # Model identifiers
 MODEL_NAME_1 = "gemini-2.5-flash"
-MODEL_NAME_2 = "gemini-3-pro-image"
+MODEL_NAME_2 = "nano-banana-pro"
 
 # Naming / execution modes
 MODE = "auto"
@@ -152,13 +165,15 @@ def category_suggestion(input_image_path: str, name_mode: str = "auto"):
             name_mode=name_mode,
             mName=MANUAL_NAME,
         )
+        if not isinstance(text1, str) or not text1.strip():
+            raise ValueError("Category suggestion model returned an empty result")
 
         # Save generated options and initialize the choice JSON
         save_opt_to_json.save_to_json(
-            text1, input_image_path, json_path="../output_pic/opt.json"
+            text1, input_image_path, json_path=OUTPUT_DIR / "opt.json"
         )
         save_choose_to_json.save_to_choose_json(
-            input_image_path, choose_value="", json_path="../output_pic/choose.json"
+            input_image_path, choose_value="", json_path=OUTPUT_DIR / "choose.json"
         )
 
     except Exception as e:
@@ -167,7 +182,7 @@ def category_suggestion(input_image_path: str, name_mode: str = "auto"):
         print(error_msg)
 
         # Error logging configuration
-        log_file = "../error_log.txt"
+        log_file = ERROR_LOG_PATH
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Construct detailed log content
@@ -215,7 +230,7 @@ def modified_img(input_image_path: str, output_image_path: str, name_mode: str =
 
     # Retrieve the chosen modification option for this image
     opt = get_choose.get_choose_by_filename(
-        img_name, json_path="../output_pic1/choose1.json"
+        img_name, json_path=OUTPUT_DIR / "choose.json"
     )
 
     if opt == "non":
@@ -233,11 +248,13 @@ def modified_img(input_image_path: str, output_image_path: str, name_mode: str =
             name_mode=name_mode,
             mName=MANUAL_NAME,
         )
+        if not isinstance(mPrompt, str) or not mPrompt.strip():
+            raise ValueError("Image edit prompt generation returned an empty result")
     except Exception as e:
         error_msg = f"❌ Program runtime error: {e}"
         print(error_msg)
 
-        log_file = "../error_log.txt"
+        log_file = ERROR_LOG_PATH
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         log_content = (
@@ -259,7 +276,7 @@ def modified_img(input_image_path: str, output_image_path: str, name_mode: str =
         return
 
     # Model explicitly indicates that no modification should be applied
-    if mPrompt == "NO":
+    if mPrompt.strip().upper() == "NO":
         print("❌ This image cannot be modified.")
         return
 
@@ -281,7 +298,7 @@ def modified_img(input_image_path: str, output_image_path: str, name_mode: str =
         error_msg = f"❌ Program runtime error: {e}"
         print(error_msg)
 
-        log_file = "../error_log.txt"
+        log_file = ERROR_LOG_PATH
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         log_content = (

@@ -1,27 +1,25 @@
 import os
+from pathlib import Path
 
 
 def process_image_paths(folder_path):
     """
-    Traverse the folder to obtain the relative paths of all images (relative to the current working directory), with the path separator unified as '/'.
+    Traverse the folder and return absolute paths for all images.
 
     :param folder_path: Path of the folder to be traversed (supports relative or absolute paths)
-    :return: List of relative paths for images (using '/' as the separator)
+    :return: List of absolute image paths
     """
     image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff')
 
-    folder_abs = os.path.abspath(folder_path)
-    current_work_dir = os.getcwd()
+    folder_abs = Path(folder_path).resolve()
 
     image_relative_paths = []
 
     for root, _, files in os.walk(folder_abs):
         for file in files:
             if file.lower().endswith(image_extensions):
-                file_abs = os.path.join(root, file)
-                file_rel = os.path.relpath(file_abs, current_work_dir)
-                file_rel = file_rel.replace(os.sep, '/')
-                image_relative_paths.append(file_rel)
+                file_abs = Path(root) / file
+                image_relative_paths.append(str(file_abs.resolve()))
 
 
     return image_relative_paths

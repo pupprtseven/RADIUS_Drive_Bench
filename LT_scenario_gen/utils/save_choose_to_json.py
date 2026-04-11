@@ -1,9 +1,16 @@
 import os,json
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from LT_scenario_gen.utils import get_img_path
+from LT_scenario_gen.utils.path_utils import INPUT_DIR, OUTPUT_DIR
 
 
-def save_to_choose_json(input_img_path, choose_value=" ", json_path="../output_pic/choose.json"):
+def save_to_choose_json(input_img_path, choose_value=" ", json_path=OUTPUT_DIR / "choose.json"):
     """
     Write the structure {"choose": "xxx", "input_image_path": "..."} to choose.json
 
@@ -11,6 +18,9 @@ def save_to_choose_json(input_img_path, choose_value=" ", json_path="../output_p
     :param choose_value: Value of the "choose" field (passed according to actual requirements)
     :param json_path: Save path
     """
+    json_path = Path(json_path)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+
     choose_data = {
         "choose": choose_value,
         "input_image_path": input_img_path
@@ -31,6 +41,6 @@ def save_to_choose_json(input_img_path, choose_value=" ", json_path="../output_p
 
 
 if __name__ == '__main__':
-    image_relative_paths = get_img_path.process_image_paths("../bc2")
+    image_relative_paths = get_img_path.process_image_paths(INPUT_DIR)
     for img_path in image_relative_paths:
-        save_to_choose_json(img_path,choose_value="", json_path="../output_pic3/choose.json")
+        save_to_choose_json(img_path, choose_value="", json_path=OUTPUT_DIR / "choose.json")

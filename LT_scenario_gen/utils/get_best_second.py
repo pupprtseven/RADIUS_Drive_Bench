@@ -1,8 +1,16 @@
 import json
 import os
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from LT_scenario_gen.utils.path_utils import OUTPUT_DIR
 
 
-def get_best_second_combined(input_image_path, json_path="result.json"):
+def get_best_second_combined(input_image_path, json_path=OUTPUT_DIR / "opt.json"):
     """
     Retrieve all values from the corresponding 'best' and 'second' fields based on the input image path, and merge them into a single array.
 
@@ -12,6 +20,9 @@ def get_best_second_combined(input_image_path, json_path="result.json"):
     """
 
     def get_raw_best_second(path, json_file):
+        path = str(path)
+        json_file = Path(json_file)
+
         if not os.path.exists(json_file):
             return None, None
         try:
@@ -25,7 +36,7 @@ def get_best_second_combined(input_image_path, json_path="result.json"):
         for item in data:
             if "input_image_path" not in item or "best" not in item or "second" not in item:
                 continue
-            stored_path = item["input_image_path"].replace(os.sep, "/")
+            stored_path = str(item["input_image_path"]).replace(os.sep, "/")
             target_path = path.replace(os.sep, "/")
             if stored_path == target_path:
                 return item["best"], item["second"]

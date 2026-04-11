@@ -4,6 +4,12 @@ import base64
 import requests
 import json
 
+
+def validate_prompt(prompt: str, context: str = "prompt") -> str:
+    if not isinstance(prompt, str) or not prompt.strip():
+        raise ValueError(f"{context} is empty or missing")
+    return prompt.strip()
+
 """
 Based on the image, recommend the category
 Input: Image
@@ -29,7 +35,7 @@ def read_prompt_from_file(file_path: str) -> str:
 
 def read_prompt_from_file_image(file: str, img_value: str = None) -> str:
     text = file
-    if "{opt}" in text:
+    if "{image}" in text:
         if img_value is None:
             raise ValueError("❌ prompt.txt contains {image} but image_VALUE is not provided.")
         text = text.replace("{image}", img_value)
@@ -56,7 +62,8 @@ def generate_text_from_image(model_name: str,api_key: str, base_url: str, prompt
     else:
         task_name = get_next_logname()
 
-    prompt=read_prompt_from_file_image(prompt,input_image_path)
+    prompt = read_prompt_from_file_image(prompt, input_image_path)
+    prompt = validate_prompt(prompt, "Category recommendation prompt")
 
 
     image_b64 = encode_image_to_base64(input_image_path)
@@ -83,10 +90,15 @@ def generate_text_from_image(model_name: str,api_key: str, base_url: str, prompt
     print("Category recommendation.......")
     response = requests.post(url, headers=headers, json=payload, timeout=300)
 
-    if response.status_code != 200:
+    if False and response.status_code != 200:
         print(f"❌ request failed: {response.status_code}")
         print(response.text)
         return
+
+    if response.status_code != 200:
+        raise RuntimeError(
+            f"Category recommendation request failed: {response.status_code} {response.text}"
+        )
 
     response_json = response.json()
 
@@ -95,6 +107,10 @@ def generate_text_from_image(model_name: str,api_key: str, base_url: str, prompt
     except (KeyError, IndexError):
         print("❌ Failed to extract text output")
         print(json.dumps(response_json, indent=2, ensure_ascii=False))
+        raise RuntimeError(
+            "Failed to extract text output from category recommendation response: "
+            + json.dumps(response_json, ensure_ascii=False)
+        )
         return
 
 

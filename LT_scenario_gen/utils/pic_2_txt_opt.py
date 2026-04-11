@@ -4,6 +4,12 @@ import base64
 import requests
 import json
 
+
+def validate_prompt(prompt: str, context: str = "prompt") -> str:
+    if not isinstance(prompt, str) or not prompt.strip():
+        raise ValueError(f"{context} is empty or missing")
+    return prompt.strip()
+
 """
 The function of this file is to specify the modification category and generate modified prompts.
 input： pic & opt
@@ -53,6 +59,8 @@ def generate_text_from_image(model_name: str, api_key: str, base_url: str, promp
     else:
         task_name = get_next_logname()
 
+    prompt = validate_prompt(prompt, "Modification prompt-generation prompt")
+
 
     image_b64 = encode_image_to_base64(input_image_path)
 
@@ -79,10 +87,15 @@ def generate_text_from_image(model_name: str, api_key: str, base_url: str, promp
     print("Image modification in progress.......")
     response = requests.post(url, headers=headers, json=payload, timeout=300)
 
-    if response.status_code != 200:
+    if False and response.status_code != 200:
         print(f"❌ request failed: {response.status_code}")
         print(response.text)
         return
+
+    if response.status_code != 200:
+        raise RuntimeError(
+            f"Modification prompt-generation request failed: {response.status_code} {response.text}"
+        )
 
     response_json = response.json()
 
@@ -91,6 +104,10 @@ def generate_text_from_image(model_name: str, api_key: str, base_url: str, promp
     except (KeyError, IndexError):
         print("❌ Failed to extract text output")
         print(json.dumps(response_json, indent=2, ensure_ascii=False))
+        raise RuntimeError(
+            "Failed to extract text output from modification prompt-generation response: "
+            + json.dumps(response_json, ensure_ascii=False)
+        )
         return
 
 

@@ -1,8 +1,40 @@
 import os
 import re
 import base64
+import mimetypes
 import requests
 import json
+
+
+def validate_prompt(prompt: str, context: str = "prompt") -> str:
+    if not isinstance(prompt, str) or not prompt.strip():
+        raise ValueError(f"{context} is empty or missing")
+    return prompt.strip()
+
+
+def extract_image_content(response_json: dict) -> str:
+    try:
+        return response_json["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError):
+        pass
+
+    try:
+        image_item = response_json["data"][0]
+        if isinstance(image_item, dict):
+            if image_item.get("b64_json"):
+                return image_item["b64_json"]
+            if image_item.get("url"):
+                raise RuntimeError(
+                    "Image response returned a URL instead of base64 content; "
+                    "this script currently expects base64 image data."
+                )
+    except (KeyError, IndexError, TypeError):
+        pass
+
+    raise RuntimeError(
+        "Failed to extract image content from image-edit response: "
+        + json.dumps(response_json, ensure_ascii=False)
+    )
 
 # ================== 配置区域 ==================
 """
@@ -73,51 +105,51 @@ def get_next_filename(folder: str,opt: str, img_name: str ,prefix="img_", ext=".
 
 def generate_image_from_image(model_name: str, api_key: str, base_url: str, prompt: str, input_image_path: str, output_image_path: str, opt: str, filename_mode: str = "auto",mName: str="analysis_1"):
     os.makedirs(output_image_path, exist_ok=True)
+    prompt = validate_prompt(prompt, "Image edit prompt")
 
     if filename_mode == "manual":
         output_path = os.path.join(output_image_path, mName)
     else:
-        img_name=os.path.basename(input_image_path)
-        img_name=os.path.splitext(img_name)[0]
-        output_path = get_next_filename(output_image_path,opt,img_name)
+        img_name = os.path.basename(input_image_path)
+        img_name = os.path.splitext(img_name)[0]
+        output_path = get_next_filename(output_image_path, opt, img_name)
 
-
-    image_b64 = encode_image_to_base64(input_image_path)
+    if not os.path.exists(input_image_path):
+        raise FileNotFoundError(f"鉂?Input image not found:{input_image_path}")
 
 
     url = f"{base_url.rstrip('/')}/images/edits"
     headers = {
         "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
     }
-
-    payload = {
+    mime_type = mimetypes.guess_type(input_image_path)[0] or "application/octet-stream"
+    data = {
         "model": model_name,
-        "messages": [
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": prompt},
-                    {"type": "image_url", "image_url": f"data:image/png;base64,{image_b64}"}
-                ]
-            }
-        ]
+        "prompt": prompt,
     }
 
 
     print("Image modification in progress.......")
-    response = requests.post(url, headers=headers, json=payload, timeout=550)
+    with open(input_image_path, "rb") as image_file:
+        files = [
+            ("image", (os.path.basename(input_image_path), image_file, mime_type)),
+        ]
+        response = requests.post(url, headers=headers, data=data, files=files, timeout=550)
 
     if response.status_code != 200:
         print(f"❌ request failed: {response.status_code}")
         print(response.text)
-        return
+        raise RuntimeError(
+            f"Image edit request failed: {response.status_code} {response.text}"
+        )
+
 
     response_json = response.json()
 
-    try:
+    content = extract_image_content(response_json)
+    if False and False:
         content = response_json["choices"][0]["message"]["content"]
-    except (KeyError, IndexError):
+    if False:
         print("❌ Failed to extract the 'content' field")
         print(json.dumps(response_json, indent=2, ensure_ascii=False))
         return

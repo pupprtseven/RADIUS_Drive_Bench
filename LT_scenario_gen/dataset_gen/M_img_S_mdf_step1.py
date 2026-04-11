@@ -1,17 +1,17 @@
-import os
-import re
-import base64
-import requests
-import json
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 import modified_to_obtain
 from LT_scenario_gen.utils import get_img_path
+from LT_scenario_gen.utils.path_utils import DATASET_DIR, load_dataset_config, resolve_from
 
-
-with open("file_path.json", "r") as f:
-    config = json.load(f)
-
-INPUT_IMAGE_PATH = config.get("input_image_path")
-OUTPUT_IMAGE_PATH = config.get("output_image_path")
+config = load_dataset_config()
+INPUT_IMAGE_PATH = resolve_from(DATASET_DIR, config.get("input_image_path"))
+OUTPUT_IMAGE_PATH = resolve_from(DATASET_DIR, config.get("output_image_path"))
 
 
 

@@ -1,7 +1,18 @@
 import os,json
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from LT_scenario_gen.utils.path_utils import OUTPUT_DIR
 
 
-def save_to_json(text1, input_img_path, json_path="../output_pic/opt.json"):
+def save_to_json(text1, input_img_path, json_path=OUTPUT_DIR / "opt.json"):
+    json_path = Path(json_path)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+
     result = {
         "best": "non",
         "second": "non",

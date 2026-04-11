@@ -3,6 +3,39 @@ import re
 import base64
 import requests
 import json
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from LT_scenario_gen.utils.path_utils import OUTPUT_DIR, PROMPT_DIR, load_api_config
+
+
+def validate_prompt(prompt: str, context: str = "prompt") -> str:
+    if not isinstance(prompt, str) or not prompt.strip():
+        raise ValueError(f"{context} is empty or missing")
+    return prompt.strip()
+
+
+def extract_image_content(response_json: dict) -> str:
+    try:
+        return response_json["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError):
+        pass
+
+    try:
+        image_item = response_json["data"][0]
+        if isinstance(image_item, dict) and image_item.get("b64_json"):
+            return image_item["b64_json"]
+    except (KeyError, IndexError, TypeError):
+        pass
+
+    raise RuntimeError(
+        "Failed to extract image content from text-to-image response: "
+        + json.dumps(response_json, ensure_ascii=False)
+    )
 
 # ====================================
 """
@@ -11,8 +44,7 @@ Input: Natural Language
 Output: Image
 """
 
-with open("../utils/config.json", "r") as f:
-    config = json.load(f)
+config = load_api_config()
 
 API_KEY = config.get("OPENAI_API_KEY")
 BASE_URL = config.get("BASE_URL")
@@ -24,8 +56,7 @@ if not API_KEY or not BASE_URL:
 
 MODEL_NAME1 = "gemini-2.5-flash"
 MODEL_NAME2 = "gemini-3-pro-image"
-PROMPT_FILE = "../prompt/Directly generate images.txt"
-OUTPUT_DIR = "../output_img"
+PROMPT_FILE = PROMPT_DIR / "Directly generate images.txt"
 
 
 MODE = "auto"
@@ -104,6 +135,7 @@ def get_next_filename(folder: str, prefix="image_", ext=".png") -> str:
 
 
 def gemini_image_gen_1(prompt:str):
+    prompt = validate_prompt(prompt, "Text-to-image planning prompt")
     url = f"{BASE_URL.rstrip('/')}/chat/completions"
 
     headers = {
@@ -128,15 +160,27 @@ def gemini_image_gen_1(prompt:str):
     if response.status_code != 200:
         print(f"❌ request failed: {response.status_code}")
         print(response.text)
+        raise RuntimeError(
+            f"Text-to-image planning request failed: {response.status_code} {response.text}"
+        )
         return
+
+    if False and response.status_code != 200:
+        raise RuntimeError(
+            f"Text-to-image planning request failed: {response.status_code} {response.text}"
+        )
 
     response_json = response.json()
 
     try:
         text_output = response_json["choices"][0]["message"]["content"]
-    except (KeyError, IndexError):
+    except (KeyError, IndexError, TypeError):
         print("❌ Failed to extract text output")
         print(json.dumps(response_json, indent=2, ensure_ascii=False))
+        raise RuntimeError(
+            "Failed to extract text output from text-to-image planning response: "
+            + json.dumps(response_json, ensure_ascii=False)
+        )
         return
 
     return text_output
@@ -144,6 +188,7 @@ def gemini_image_gen_1(prompt:str):
 
 def gemini_image_gen_2(prompt: str, filename_mode: str = "auto"):
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+    prompt = validate_prompt(prompt, "Text-to-image generation prompt")
 
     if filename_mode == "manual":
         output_path = os.path.join(OUTPUT_DIR, MANUAL_FILENAME)
@@ -165,15 +210,24 @@ def gemini_image_gen_2(prompt: str, filename_mode: str = "auto"):
     if response.status_code != 200:
         print(f"❌ request failed: {response.status_code}")
         print(response.text)
+        raise RuntimeError(
+            f"Text-to-image generation request failed: {response.status_code} {response.text}"
+        )
         return
+
+    if response.status_code != 200:
+        raise RuntimeError(
+            f"Text-to-image generation request failed: {response.status_code} {response.text}"
+        )
 
     response_json = response.json()
     print("✅ ")
     print(json.dumps(response_json, indent=2, ensure_ascii=False)[:600], "...\n")
 
-    try:
+    content = extract_image_content(response_json)
+    if False:
         content = response_json["choices"][0]["message"]["content"]
-    except (KeyError, IndexError):
+    if False:
         print("❌ Failed to extract the content field")
         return
 
