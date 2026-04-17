@@ -427,31 +427,59 @@ Constraints:
     },
     "judge_post_level": {
         "system": (
-            "You are a strict evaluator that maps an autonomous-driving post-decision rationale "
-            "to an abstract level 1-5. Respond ONLY in JSON."
+            "You are a judge that maps one autonomous-driving post_decision_plan to the historical "
+            "post-decision handling level used by earlier benchmark labels. "
+            "Judge the dominant handling strategy, not driving quality, wording richness, or generic safety detail. "
+            "Reply ONLY in JSON."
         ),
-        "user": """## Post-decision level mapping (choose the single best level):
-- Level 1: Immediate local passage (straight or detour) with speed control.
-- Level 2: Wait/avoidance first, then proceed (straight or detour).
-- Level 3: Wait first, then choose straight vs detour depending on situation.
-- Level 4: Park safely and request instructions OR replan the route.
-- Level 5: Emergency evacuation / leave area entirely.
+        "user": """## Goal
+Infer the plan's historical handling level from 1-5.
+Use the dominant intended strategy, not superficial wording.
+Treat paraphrases with the same intent as equivalent.
 
-## Evidence to map:
+## Main evidence
+- Post-decision plan: {post_decision_plan}
+
+## Auxiliary context
 - Long-tail classification (level3): {level3}
 - Long-tail element: {lt_ele}
 - Passability factors: {acc_factors_text}
 - Effective factors (groups that matter): {acc_effective_indices}
-- Post-decision plan (free text): {post_decision_plan}
 - Chain-of-thought (reasoning): {cot}
 - Ground-truth post_dec level (if available): {gt_post_dec_level}
 
-## Instructions:
-- Use the reasoning and plan to pick the most suitable level (1-5).
-- Ignore wording style; focus on the actual intent (wait/park/evacuate/pass).
-- If the plan is ambiguous between two adjacent levels, choose the more conservative one.
+## Historical calibration
+Historical labels are broader than a strict taxonomy.
+- Be conservative about assigning 4 or 5.
+- Do not over-score because of generic safety details like braking, monitoring, hazard lights, mirrors, headlights, or smooth control.
+- Do not under-score plans that operationalize a cautious slow/hold/monitor-before-proceed posture even without a literal full stop.
+- When multiple actions appear, score the main path / dominant safety posture, not a minor fallback clause.
+- If reroute/detour/request-assistance is only a fallback after waiting for a temporary obstacle, usually prefer 3 rather than 4.
+- If the current route is treated as effectively unavailable as the main plan, prefer 4.
+- If the provided historical GT level is available, do NOT copy it directly. Use it only as a weak tie-breaker when the plan genuinely fits two adjacent levels equally well.
 
-## Required Output (JSON):
+## Score definitions
+- Level 1: Immediate local passage. The plan mainly keeps moving through the scene using speed control, lane keeping, following traffic, or a straightforward local bypass. Any stop/yield language is only incidental contingency.
+- Level 2: Avoid / yield / brief hold first, then continue. The plan mainly yields, briefly waits, or adopts a cautious slowed/standby posture for one temporary conflict or obvious opening, then continues on the original or simple local path.
+- Level 3: Wait / assess first, then choose conditionally. The plan centers on stop/hold/low-speed standby first, then confirming visibility, gap, clearance, path, depth, traction, signal state, worker movement, or another condition before choosing whether/how to proceed.
+- Level 4: Safe stop, closure/control handling, or default reroute/replan. The plan mainly treats the current route as not directly passable for now and centers on stopping safely, not entering, awaiting official/manual guidance, or rerouting / detouring / turning around as the main/default path.
+- Level 5: Leave the danger area / emergency withdrawal. Use only when remaining nearby is itself unsafe and the plan centers on creating distance from an acute hazard zone.
+
+## Boundary rules
+- 1 vs 2: choose 1 if the plan mainly continues locally and any stop/yield is incidental. Choose 2 if the plan mainly yields, waits briefly, or avoids one specific temporary conflict before continuing.
+- 2 vs 3: choose 2 when the check is only for an obvious immediate opening, nearby user conflict, or routine local bypass. Choose 3 when the plan really centers on hold/confirm/reassess first and proceeding only if conditions are verified safe.
+- 3 vs 4: choose 3 if the default path is still wait/assess and proceed locally when safe, even if detour/replan is mentioned as a fallback. Choose 4 if stop/control/replan is the main handling strategy because the route is effectively unavailable.
+- 4 vs 5: choose 4 for ordinary closure/blockage/flood/collapse handling. Choose 5 only when the text clearly frames the scene as a danger zone that requires withdrawal from the area itself.
+
+## Important tendencies
+- Brief stop/wait for crossing users, animals, visibility improvement, or temporary blockage often scores 3 if the plan explicitly checks conditions before resuming.
+- Explicit stop/hold + confirm-clear/gap/path plans often remain 3 even when the eventual maneuver is only a local bypass.
+- Ordinary stop-yield-local-bypass cases can still stay at 2 when the check is only to yield for a nearby actor or an obvious local opening.
+- Poor-visibility following / slow-crawl / low-speed standby plans are often above level 1 when the plan centers on holding a slowed state and resuming only after path or visibility is clear.
+- Searching ahead for whether a closure/restriction actually exists, then reacting only if encountered, often remains 3 rather than 4.
+- Work-zone, blockage, or flood scenes can remain 2 or 3 if the plan mainly waits and proceeds when reopened/clear, rather than immediately abandoning the route.
+
+## Required Output (JSON)
 {{
   "score": <integer 1-5>,
   "reasoning": "brief note on why this level fits best",
